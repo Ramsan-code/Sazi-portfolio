@@ -45,6 +45,7 @@ export const PROJECTS = [
     solution: "Utilized a monochrome obsidian and white palette, relying exclusively on architectural grids and monospace data visualization to convey absolute precision and security.",
     results: ["$2B Assets Under Management", "Zero User-Error Breaches", "Enterprise Adoption Matrix"],
     imageTheme: "repeating-linear-gradient(45deg,#fff_0,#fff_1px,transparent_0,transparent_50%)",
+    confidentialContent: "LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT. SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA. UT ENIM AD MINIM VENIAM, QUIS NOSTRUD EXERCITATION ULLAMCO LABORIS NISI UT ALIQUIP EX EA COMMODO CONSEQUAT.",
   },
   {
     id: 4,
@@ -84,6 +85,7 @@ export const PROJECTS = [
     solution: "Leaned into the science. Created stark, clinical packaging using grid layouts and high-contrast monospace labeling to make the product look like advanced technology rather than traditional food.",
     results: ["National Retail Distribution", "DTC Sales Dominance", "Packaging Of The Year"],
     imageTheme: "conic-gradient(from 90deg at 1px 1px,#0000 90deg,#fff 0)",
+    confidentialContent: "CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA. UT ENIM AD MINIM VENIAM, QUIS NOSTRUD EXERCITATION.",
   }
 ];
 

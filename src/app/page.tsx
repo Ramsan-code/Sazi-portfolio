@@ -96,7 +96,7 @@ export default function Home() {
             <div className="relative h-full w-full bg-zinc-900 border-4 border-white overflow-hidden z-10 outline-none transition-all duration-300 group-hover:border-8">
               <Image 
                 src="/portrait.png" 
-                alt="Sazi Balasingam - Graphic Designer"
+                alt="Sazi  - Graphic Designer"
                 fill
                 className="object-cover grayscale group-hover:grayscale-0 transition-all duration-300 ease-in-out scale-100 group-hover:scale-105"
                 priority

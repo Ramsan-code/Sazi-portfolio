@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { PROJECTS } from "@/data/projects";
 import { notFound } from "next/navigation";
 import { ProjectSandbox } from "@/components/sandboxes/ProjectSandbox";
+import { StealthDisclosure } from "@/components/StealthDisclosure";
 
 export default function ProjectDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
@@ -15,6 +16,14 @@ export default function ProjectDetail({ params }: { params: Promise<{ slug: stri
   if (!project) {
     notFound();
   }
+
+  // Map theme colors for tailwind compatibility
+  const colorMap: Record<string, string> = {
+    mint: "bg-mint",
+    peri: "bg-peri",
+    white: "bg-white",
+    obsidian: "bg-obsidian"
+  };
 
   return (
     <div className="w-full bg-obsidian text-white min-h-screen pt-24 pb-32">
@@ -52,9 +61,24 @@ export default function ProjectDetail({ params }: { params: Promise<{ slug: stri
             }} 
            />
            <div className="absolute inset-0 flex items-center justify-center">
-             <div className={`w-32 h-32 rounded-full animate-bounce bg-${project.color}`} style={{ animationDuration: '4s' }} />
+             <div className={`w-32 h-32 rounded-full animate-bounce ${colorMap[project.color] || "bg-white"}`} style={{ animationDuration: '4s' }} />
            </div>
         </motion.div>
+
+        {/* Stealth Section (NEW: Progressive Disclosure) */}
+        {project.confidentialContent && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="mb-24"
+          >
+            <StealthDisclosure 
+              content={project.confidentialContent} 
+              label="Stealth Case Logic (Locked)" 
+            />
+          </motion.div>
+        )}
 
         {/* Content Structure */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
@@ -88,6 +112,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ slug: stri
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
+            className="mt-24"
           >
             <ProjectSandbox 
               type={project.sandboxType!} 

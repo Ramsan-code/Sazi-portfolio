@@ -17,7 +17,7 @@ export function Footer({ showContact = true }: { showContact?: boolean }) {
       {/* Social Links & Meta */}
       <div className="w-full max-w-7xl mx-auto py-12 px-8 flex flex-col md:flex-row justify-between items-center gap-8 border-t-4 border-white/10">
         <div className="font-heading font-black text-4xl uppercase tracking-tighter">
-          Sazi <span className="text-mint">Stark</span>
+          Sazi <span className="text-mint">Balasingam</span>
         </div>
         
         <div className="flex gap-6 font-mono font-bold text-sm tracking-widest uppercase">
