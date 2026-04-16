@@ -2,17 +2,12 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { BackgroundAccents } from "@/components/BackgroundAccents";
 
 export default function About() {
   return (
     <div className="w-full bg-obsidian text-white min-h-[calc(100vh-6rem)] relative overflow-hidden pb-32">
-      
-      {/* Background Decor */}
-      <motion.div 
-        animate={{ rotate: 360 }}
-        transition={{ duration: 60, ease: "linear", repeat: Infinity }}
-        className="fixed top-[20%] right-[-20%] w-[60vw] h-[60vw] rounded-full border-[8px] border-mint/10 -z-10 mix-blend-screen mix-blend-mode"
-      />
+      <BackgroundAccents />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 pt-24">
         <motion.h1 

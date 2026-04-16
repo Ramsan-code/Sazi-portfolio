@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { PROJECTS, CATEGORIES } from "@/data/projects";
+import { ProjectCard } from "@/components/ProjectCard";
 
 export default function Projects() {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -43,37 +43,13 @@ export default function Projects() {
 
         {/* Project Grid */}
         <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 gap-y-16">
-          <AnimatePresence>
+          <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-              >
-                <Link href={`/projects/${project.slug}`} className="group block w-full relative">
-                 {/* Shadows defined dynamically based on project color */}
-                  <div className={`absolute inset-0 translate-x-4 translate-y-4 group-hover:translate-x-6 group-hover:translate-y-6 transition-transform duration-200 ${
-                    project.color === 'mint' ? 'bg-mint' : project.color === 'peri' ? 'bg-peri' : 'bg-gray-200'
-                  }`} />
-                  
-                  <div className="relative border-4 border-obsidian bg-obsidian overflow-hidden aspect-[4/3] z-10 flex items-center justify-center">
-                    <div className="absolute inset-0 bg-[linear-gradient(45deg,#000_25%,transparent_25%,transparent_75%,#000_75%,#000),linear-gradient(45deg,#000_25%,#0b0b0b_25%,#0b0b0b_75%,#000_75%,#000)] bg-[length:20px_20px] bg-[position:0_0,10px_10px] opacity-20" />
-                    <span className="font-heading font-black text-6xl text-white group-hover:scale-110 transition-transform duration-300">
-                      0{project.id}
-                    </span>
-                  </div>
-                  
-                  <div className="mt-6 flex justify-between items-start">
-                    <div>
-                      <h3 className="font-heading font-black text-2xl uppercase">{project.title}</h3>
-                      <p className="font-mono text-sm font-bold text-gray-500 mt-1 uppercase">{project.category}</p>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
+              <ProjectCard 
+                key={project.id} 
+                project={project} 
+                index={index} 
+              />
             ))}
           </AnimatePresence>
         </motion.div>

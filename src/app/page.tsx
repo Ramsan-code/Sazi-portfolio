@@ -3,38 +3,31 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { PROJECTS } from "@/data/projects";
+import { BackgroundAccents } from "@/components/BackgroundAccents";
+import { ProjectCard } from "@/components/ProjectCard";
 
 export default function Home() {
+  const featuredProjects = PROJECTS.slice(0, 2);
+
   return (
     <div className="relative min-h-[calc(100vh-6rem)] w-full overflow-hidden flex flex-col items-center">
-      
-      {/* Background Geometric Accents (Animated) */}
-      <motion.div 
-        animate={{ rotate: 360 }}
-        transition={{ duration: 40, ease: "linear", repeat: Infinity }}
-        className="fixed top-[-10%] left-[-5%] w-[50vw] h-[50vw] rounded-full border-[8px] border-mint/10 -z-10 mix-blend-screen mix-blend-mode"
-      />
-      <motion.div 
-        animate={{ rotate: -360 }}
-        transition={{ duration: 50, ease: "linear", repeat: Infinity }}
-        className="fixed top-[-5%] right-[-10%] w-[45vw] h-[45vw] rounded-full border-[8px] border-peri/10 -z-10 mix-blend-screen mix-blend-mode"
-      />
+      <BackgroundAccents />
       
       {/* Main Content Layout */}
       <section className="relative w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between z-10 gap-16 md:gap-8 px-4 sm:px-8 md:px-16 pb-24">
         
         {/* Left Side: Typography */}
         <div className="flex-1 flex flex-col space-y-6 md:space-y-10 w-full z-20 relative pt-12">
-            {/* Interlocking Circles Accent */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 0.7, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="absolute -top-12 -left-8 md:flex hidden"
-            >
-              <motion.div animate={{ rotate: 360 }} transition={{ duration: 15, ease: "linear", repeat: Infinity }} className="w-16 h-16 rounded-full border-4 border-mint mix-blend-difference" />
-              <motion.div animate={{ rotate: -360 }} transition={{ duration: 15, ease: "linear", repeat: Infinity }} className="w-16 h-16 rounded-full border-4 border-peri -ml-8 mix-blend-difference" />
-            </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 0.7, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="absolute -top-12 -left-8 md:flex hidden"
+          >
+            <motion.div animate={{ rotate: 360 }} transition={{ duration: 15, ease: "linear", repeat: Infinity }} className="w-16 h-16 rounded-full border-4 border-mint mix-blend-difference" />
+            <motion.div animate={{ rotate: -360 }} transition={{ duration: 15, ease: "linear", repeat: Infinity }} className="w-16 h-16 rounded-full border-4 border-peri -ml-8 mix-blend-difference" />
+          </motion.div>
 
           <motion.div 
             initial={{ clipPath: "inset(0 100% 0 0)" }}
@@ -47,7 +40,6 @@ export default function Home() {
               <br />
               Stark
             </h1>
-            {/* Brutalist Shadow / Echo */}
             <div className="absolute top-2 left-3 md:top-4 md:left-6 font-heading font-black text-[15vw] md:text-[9rem] leading-[0.85] tracking-tighter uppercase text-transparent [-webkit-text-stroke:2px_#3eb489] -z-10 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-300">
               Sazi
               <br />
@@ -99,10 +91,8 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.3, type: "spring" }}
             className="relative w-[300px] md:w-[400px] h-[350px] md:h-[450px] group"
           >
-            {/* The Periwinkle Square Decor */}
             <div className="absolute inset-0 bg-peri translate-x-6 translate-y-6 md:translate-x-10 md:translate-y-10 z-0 transition-all duration-300 group-hover:translate-x-12 group-hover:translate-y-12"></div>
             
-            {/* Image Container */}
             <div className="relative h-full w-full bg-zinc-900 border-4 border-white overflow-hidden z-10 outline-none transition-all duration-300 group-hover:border-8">
               <Image 
                 src="/portrait.png" 
@@ -111,12 +101,10 @@ export default function Home() {
                 className="object-cover grayscale group-hover:grayscale-0 transition-all duration-300 ease-in-out scale-100 group-hover:scale-105"
                 priority
               />
-              {/* Overlay elements */}
               <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-mint rotate-12 group-hover:rotate-45 transition-transform duration-300"></div>
               <div className="absolute top-4 right-4 w-6 h-6 rounded-full bg-white opacity-50 mix-blend-overlay"></div>
             </div>
             
-            {/* Abstract Decorative Lines */}
             <div className="absolute -right-8 top-[20%] h-[60%] w-2 border-l-4 border-dashed border-mint z-20"></div>
           </motion.div>
         </div>
@@ -136,51 +124,16 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8">
-            {/* Mock Project 1 */}
-            <Link href="/projects/fintech-disrupt" className="group block w-full relative">
-              <div className="absolute inset-0 bg-mint translate-x-4 translate-y-4 group-hover:translate-x-6 group-hover:translate-y-6 transition-transform duration-200" />
-              <div className="relative border-4 border-obsidian bg-obsidian overflow-hidden aspect-[4/3] z-10">
-                {/* Fallback pattern instead of image */}
-                <div className="absolute inset-0 bg-[linear-gradient(45deg,#000_25%,transparent_25%,transparent_75%,#000_75%,#000),linear-gradient(45deg,#000_25%,#0b0b0b_25%,#0b0b0b_75%,#000_75%,#000)] bg-[length:20px_20px] bg-[position:0_0,10px_10px] opacity-20" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-heading font-black text-6xl text-white group-hover:scale-110 transition-transform duration-300">01</span>
-                </div>
-              </div>
-              <div className="mt-8 flex justify-between items-start">
-                <div>
-                  <h3 className="font-heading font-black text-2xl uppercase">Fintech Disrupt</h3>
-                  <p className="font-mono text-sm font-bold text-gray-500 mt-2 uppercase">Brand Identity / Digital</p>
-                </div>
-                <div className="w-12 h-12 rounded-full border-4 border-obsidian flex items-center justify-center group-hover:bg-peri group-hover:text-white transition-colors duration-200">
-                  <span className="font-mono font-bold font-xl">→</span>
-                </div>
-              </div>
-            </Link>
-
-            {/* Mock Project 2 */}
-            <Link href="/projects/neo-commerce" className="group block w-full relative mt-0 md:mt-24">
-              <div className="absolute inset-0 bg-peri translate-x-4 translate-y-4 group-hover:translate-x-6 group-hover:translate-y-6 transition-transform duration-200" />
-              <div className="relative border-4 border-obsidian bg-obsidian overflow-hidden aspect-[4/3] z-10">
-                {/* Fallback pattern instead of image */}
-                <div className="absolute inset-0 bg-[radial-gradient(#3eb489_2px,transparent_2px)] [background-size:16px_16px] opacity-20" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-heading font-black text-6xl text-white group-hover:scale-110 transition-transform duration-300">02</span>
-                </div>
-              </div>
-              <div className="mt-8 flex justify-between items-start">
-                <div>
-                  <h3 className="font-heading font-black text-2xl uppercase">Neo Commerce</h3>
-                  <p className="font-mono text-sm font-bold text-gray-500 mt-2 uppercase">UI/UX / Motion</p>
-                </div>
-                <div className="w-12 h-12 rounded-full border-4 border-obsidian flex items-center justify-center group-hover:bg-mint transition-colors duration-200">
-                  <span className="font-mono font-bold font-xl">→</span>
-                </div>
-              </div>
-            </Link>
+            {featuredProjects.map((project, idx) => (
+              <ProjectCard 
+                key={project.id} 
+                project={project} 
+                className={idx === 1 ? "mt-0 md:mt-24" : ""} 
+              />
+            ))}
           </div>
         </div>
       </section>
-
     </div>
   );
 }

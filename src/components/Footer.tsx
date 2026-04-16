@@ -54,19 +54,6 @@ export function Footer({ showContact = true }: { showContact?: boolean }) {
           <span>Creative Direction</span>
         </div>
       </div>
-      
-      {/* Dynamic Marquee CSS directly inline string */}
-      <style dangerouslySetInnerHTML={{
-        __html: `
-        @keyframes marquee {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-33.33%); }
-        }
-        .animate-marquee {
-          animation: marquee 15s linear infinite;
-        }
-        `
-      }} />
     </footer>
   );
 }

@@ -38,7 +38,6 @@ export function ContactForm() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     alert("Project request submitted securely!");
     form.reset();
   }
