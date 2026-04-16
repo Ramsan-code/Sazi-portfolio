@@ -28,13 +28,15 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth">
       <body
-        className={`${spaceGrotesk.variable} ${archivo.variable} antialiased bg-obsidian text-white selection:bg-mint selection:text-black min-h-screen overflow-x-hidden flex flex-col font-sans`}
+        className={`${spaceGrotesk.variable} ${archivo.variable} antialiased bg-obsidian text-white selection:bg-mint selection:text-black min-h-screen flex flex-col font-sans`}
       >
-        <Navigation />
-        <div className="flex-1 mt-24">
-          {children}
+        <div className="relative w-full overflow-x-hidden flex flex-col min-h-screen">
+          <Navigation />
+          <div className="flex-1 mt-24">
+            {children}
+          </div>
+          <Footer />
         </div>
-        <Footer />
         <Toaster position="bottom-right" />
       </body>
     </html>

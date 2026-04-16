@@ -44,13 +44,13 @@ export function Navigation() {
         }}
         animate={isHidden ? "hidden" : "visible"}
         transition={{ duration: 0.35, ease: "easeInOut" }}
-        className={`fixed top-0 left-0 w-full p-6 md:p-8 flex justify-between items-center z-50 transition-colors duration-300 ${
+        className={`fixed top-0 left-0 w-full p-4 sm:p-6 md:p-8 flex justify-between items-center z-50 transition-colors duration-300 ${
           isScrolled 
             ? "bg-obsidian/90 backdrop-blur-md border-b-4 border-obsidian" 
             : "bg-transparent border-b-4 border-transparent"
         }`}
       >
-        <Link href="/" className="font-heading font-black text-xl md:text-2xl uppercase hover:text-mint transition-colors relative z-50">
+        <Link href="/" className="font-heading font-black text-lg sm:text-xl md:text-2xl uppercase hover:text-mint transition-colors relative z-50">
           Sazi Balasingam
         </Link>
         

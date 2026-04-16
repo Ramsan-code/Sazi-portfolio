@@ -15,7 +15,7 @@ export default function Home() {
       <BackgroundAccents />
       
       {/* Main Content Layout */}
-      <section className="relative w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between z-10 gap-16 md:gap-8 px-4 sm:px-8 md:px-16 pb-24">
+      <section className="relative w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between z-10 gap-16 md:gap-8 px-4 sm:px-8 md:px-16 pb-24 overflow-x-hidden">
         
         {/* Left Side: Typography */}
         <div className="flex-1 flex flex-col space-y-6 md:space-y-10 w-full z-20 relative pt-12">
@@ -38,12 +38,12 @@ export default function Home() {
             <h1 className="font-heading font-black leading-[0.85] uppercase relative z-10 group-hover:animate-glitch break-words">
               <span className="text-[15vw] md:text-[9rem]">Sazi</span>
               <br />
-              <span className="text-[10vw] md:text-[5.5rem] text-peri">Balasingam</span>
+              <span className="text-[9vw] md:text-[5.5rem] text-peri">Balasingam</span>
             </h1>
             <div className="absolute top-1 left-1 md:top-4 md:left-6 font-heading font-black leading-[0.85] uppercase text-transparent [-webkit-text-stroke:1px_#3eb489] md:[-webkit-text-stroke:2px_#3eb489] -z-10 group-hover:translate-x-2 md:group-hover:translate-x-4 group-hover:translate-y-2 md:group-hover:translate-y-4 group-hover:[-webkit-text-stroke:2px_#8f94fb] transition-all duration-300">
               <span className="text-[15vw] md:text-[9rem]">Sazi</span>
               <br />
-              <span className="text-[10vw] md:text-[5.5rem]">Balasingam</span>
+              <span className="text-[9vw] md:text-[5.5rem]">Balasingam</span>
             </div>
           </motion.div>
 
@@ -69,15 +69,15 @@ export default function Home() {
           </motion.p>
 
           <motion.div 
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.8 }}
-            className="mt-8 flex gap-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="flex flex-col sm:flex-row gap-4 mt-8 w-full sm:w-auto"
           >
-            <Link href="/projects" className="inline-block font-mono font-bold uppercase tracking-widest text-black bg-mint px-8 py-4 border-4 border-obsidian transition-all duration-150 hover:-translate-y-1 hover:-translate-x-1 shadow-[6px_6px_0px_#8f94fb] hover:shadow-[10px_10px_0px_#8f94fb] active:translate-y-0 active:translate-x-0 active:shadow-none">
+            <Link href="/projects" className="inline-block font-mono font-bold uppercase tracking-widest text-black bg-mint px-8 py-4 border-4 border-obsidian transition-all duration-150 hover:-translate-y-1 hover:-translate-x-1 shadow-[6px_6px_0px_#8f94fb] hover:shadow-[10px_10px_0px_#8f94fb] active:translate-y-0 active:translate-x-0 active:shadow-none text-center">
               View Work
             </Link>
-            <Link href="/contact" className="inline-block font-mono font-bold uppercase tracking-widest text-white bg-obsidian border-4 border-white px-8 py-4 transition-all duration-150 hover:-translate-y-1 hover:-translate-x-1 hover:border-peri hover:text-peri shadow-[6px_6px_0px_transparent] hover:shadow-[6px_6px_0px_#8f94fb] active:translate-y-0 active:translate-x-0 active:shadow-none">
+            <Link href="/contact" className="inline-block font-mono font-bold uppercase tracking-widest text-white bg-obsidian border-4 border-white px-8 py-4 transition-all duration-150 hover:-translate-y-1 hover:-translate-x-1 hover:border-peri hover:text-peri shadow-[6px_6px_0px_transparent] hover:shadow-[6px_6px_0px_#8f94fb] active:translate-y-0 active:translate-x-0 active:shadow-none text-center">
               Inquire
             </Link>
           </motion.div>
@@ -112,7 +112,7 @@ export default function Home() {
       </section>
 
       {/* Selected Work Preview Section */}
-      <section className="w-full bg-white text-obsidian py-24 border-t-8 border-obsidian z-10 relative">
+      <section className="w-full bg-white text-obsidian py-24 border-t-8 border-obsidian z-10 relative overflow-x-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-16">
           <div className="flex justify-between items-end mb-16">
             <h2 className="font-heading font-black text-5xl md:text-7xl uppercase">
