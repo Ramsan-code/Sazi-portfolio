@@ -14,9 +14,9 @@ export default function About() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-          className="font-heading font-black text-6xl md:text-8xl uppercase mb-16"
+          className="font-heading font-black text-5xl sm:text-6xl md:text-8xl uppercase mb-16 break-words"
         >
-          Behind The <br/><span className="text-transparent [-webkit-text-stroke:4px_#5E6AD2]">Brutalism.</span>
+          Behind The <br/><span className="text-transparent [-webkit-text-stroke:2px_#5E6AD2] md:[-webkit-text-stroke:4px_#5E6AD2]">Brutalism.</span>
         </motion.h1>
 
         <div className="flex flex-col md:flex-row gap-16 items-start">
@@ -51,7 +51,7 @@ export default function About() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="flex-1 w-full relative"
           >
-            <div className="absolute inset-0 bg-mint translate-x-6 translate-y-6 md:translate-x-12 md:translate-y-12 z-0" />
+            <div className="absolute inset-0 bg-mint translate-x-3 translate-y-3 md:translate-x-12 md:translate-y-12 z-0" />
             <div className="relative border-4 border-white bg-zinc-900 aspect-[3/4] z-10 overflow-hidden group">
               <Image 
                 src="/portrait.png" 

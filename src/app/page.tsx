@@ -35,15 +35,15 @@ export default function Home() {
             transition={{ duration: 0.8, ease: [0.77, 0, 0.175, 1] }}
             className="relative inline-block group"
           >
-            <h1 className="font-heading font-black text-[15vw] md:text-[9rem] leading-[0.85] uppercase relative z-10 group-hover:animate-glitch">
-              Sazi
+            <h1 className="font-heading font-black leading-[0.85] uppercase relative z-10 group-hover:animate-glitch break-words">
+              <span className="text-[15vw] md:text-[9rem]">Sazi</span>
               <br />
-              Stark
+              <span className="text-[10vw] md:text-[5.5rem] text-peri">Balasingam</span>
             </h1>
-            <div className="absolute top-2 left-3 md:top-4 md:left-6 font-heading font-black text-[15vw] md:text-[9rem] leading-[0.85] uppercase text-transparent [-webkit-text-stroke:2px_#3eb489] -z-10 group-hover:translate-x-4 group-hover:translate-y-4 group-hover:[-webkit-text-stroke:2px_#8f94fb] transition-all duration-300">
-              Sazi
+            <div className="absolute top-1 left-1 md:top-4 md:left-6 font-heading font-black leading-[0.85] uppercase text-transparent [-webkit-text-stroke:1px_#3eb489] md:[-webkit-text-stroke:2px_#3eb489] -z-10 group-hover:translate-x-2 md:group-hover:translate-x-4 group-hover:translate-y-2 md:group-hover:translate-y-4 group-hover:[-webkit-text-stroke:2px_#8f94fb] transition-all duration-300">
+              <span className="text-[15vw] md:text-[9rem]">Sazi</span>
               <br />
-              Stark
+              <span className="text-[10vw] md:text-[5.5rem]">Balasingam</span>
             </div>
           </motion.div>
 
@@ -89,9 +89,9 @@ export default function Home() {
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3, type: "spring" }}
-            className="relative w-[300px] md:w-[400px] h-[350px] md:h-[450px] group"
+            className="relative w-full max-w-[300px] md:max-w-[400px] aspect-[4/5] md:h-[450px] group"
           >
-            <div className="absolute inset-0 bg-peri translate-x-6 translate-y-6 md:translate-x-10 md:translate-y-10 z-0 transition-all duration-300 group-hover:translate-x-12 group-hover:translate-y-12"></div>
+            <div className="absolute inset-0 bg-peri translate-x-4 translate-y-4 md:translate-x-10 md:translate-y-10 z-0 transition-all duration-300 group-hover:translate-x-6 md:group-hover:translate-x-12 group-hover:translate-y-6 md:group-hover:translate-y-12"></div>
             
             <div className="relative h-full w-full bg-zinc-900 border-4 border-white overflow-hidden z-10 outline-none transition-all duration-300 group-hover:border-8 scanline">
               <Image 

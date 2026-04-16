@@ -12,7 +12,7 @@ export default function Contact() {
         </p>
 
         <div className="flex justify-center gap-8 mt-12 font-mono text-sm uppercase font-bold text-peri">
-          <a href="mailto:hello@sazistark.com" className="hover:text-mint transition-colors">hello@sazistark.com</a>
+          <a href="mailto:hello@sazibalasingam.com" className="hover:text-mint transition-colors">hello@sazibalasingam.com</a>
           <span>•</span>
           <span>Los Angeles, CA</span>
           <span>•</span>

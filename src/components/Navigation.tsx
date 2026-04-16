@@ -50,7 +50,7 @@ export function Navigation() {
             : "bg-transparent border-b-4 border-transparent"
         }`}
       >
-        <Link href="/" className="font-heading font-black text-2xl uppercase hover:text-mint transition-colors relative z-50">
+        <Link href="/" className="font-heading font-black text-xl md:text-2xl uppercase hover:text-mint transition-colors relative z-50">
           Sazi Balasingam
         </Link>
         

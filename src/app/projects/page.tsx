@@ -19,9 +19,9 @@ export default function Projects() {
         <motion.h1 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="font-heading font-black text-6xl md:text-8xl uppercase mb-8"
+          className="font-heading font-black text-5xl sm:text-6xl md:text-8xl uppercase mb-8 break-words"
         >
-          Curated <br/> <span className="text-transparent [-webkit-text-stroke:4px_#0b0b0b]">Archive.</span>
+          Curated <br/> <span className="text-transparent [-webkit-text-stroke:2px_#0b0b0b] md:[-webkit-text-stroke:4px_#0b0b0b]">Archive.</span>
         </motion.h1>
 
         {/* Filter System */}

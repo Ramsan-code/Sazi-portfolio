@@ -28,7 +28,7 @@ export function ProjectCard({ project, className = "", index = 0 }: ProjectCardP
     >
       <Link href={`/projects/${project.slug}`} className="group block w-full">
         <div className="relative">
-          <div className={`absolute inset-0 translate-x-4 translate-y-4 group-hover:translate-x-6 group-hover:translate-y-6 transition-transform duration-200 ${
+          <div className={`absolute inset-0 translate-x-2 translate-y-2 md:translate-x-4 md:translate-y-4 group-hover:translate-x-4 group-hover:translate-y-4 md:group-hover:translate-x-6 md:group-hover:translate-y-6 transition-transform duration-200 ${
             project.color === 'mint' ? 'bg-mint' : project.color === 'peri' ? 'bg-peri' : 'bg-white'
           }`} />
           

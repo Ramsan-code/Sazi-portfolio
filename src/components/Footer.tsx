@@ -20,7 +20,7 @@ export function Footer({ showContact = true }: { showContact?: boolean }) {
           Sazi <span className="text-mint">Balasingam</span>
         </div>
         
-        <div className="flex gap-6 font-mono font-bold text-sm tracking-widest uppercase">
+        <div className="flex flex-wrap justify-center gap-y-4 gap-x-8 md:gap-6 font-mono font-bold text-sm tracking-widest uppercase">
           <Link href="https://linkedin.com" target="_blank" className="hover:text-peri transition-colors">LinkedIn</Link>
           <Link href="https://twitter.com" target="_blank" className="hover:text-mint transition-colors">Twitter</Link>
           <Link href="https://instagram.com" target="_blank" className="hover:text-peri transition-colors">Instagram</Link>
