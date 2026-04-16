@@ -55,7 +55,7 @@ export function ContactForm() {
           </p>
         </div>
         
-        <div className="flex-1 bg-white p-8 border-4 border-obsidian shadow-[8px_8px_0px_#0b0b0b]">
+        <div className="flex-1 bg-white p-8 border-8 border-obsidian shadow-[12px_12px_0px_#0b0b0b]">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
@@ -67,11 +67,11 @@ export function ContactForm() {
                     <FormControl>
                       <Input 
                         placeholder="ALICE WONDERLAND" 
-                        className="rounded-none border-2 border-obsidian bg-zinc-50 font-mono focus-visible:ring-0 focus-visible:border-peri p-6" 
+                        className="rounded-none border-4 border-obsidian bg-zinc-50 font-mono focus-visible:ring-0 focus-visible:border-peri p-6 transition-colors duration-150" 
                         {...field} 
                       />
                     </FormControl>
-                    <FormMessage className="font-mono font-bold text-red-600" />
+                    <FormMessage className="font-mono font-bold text-red-600 animate-bounce" />
                   </FormItem>
                 )}
               />
@@ -86,11 +86,11 @@ export function ContactForm() {
                       <Input 
                         type="email"
                         placeholder="ALICE@RAD-STARTUP.COM" 
-                        className="rounded-none border-2 border-obsidian bg-zinc-50 font-mono focus-visible:ring-0 focus-visible:border-peri p-6" 
+                        className="rounded-none border-4 border-obsidian bg-zinc-50 font-mono focus-visible:ring-0 focus-visible:border-peri p-6 transition-colors duration-150" 
                         {...field} 
                       />
                     </FormControl>
-                    <FormMessage className="font-mono font-bold text-red-600" />
+                    <FormMessage className="font-mono font-bold text-red-600 animate-bounce" />
                   </FormItem>
                 )}
               />
@@ -104,18 +104,18 @@ export function ContactForm() {
                     <FormControl>
                       <Textarea 
                         placeholder="TELL ME ABOUT YOUR BRUTAL PROJECT..." 
-                        className="rounded-none border-2 border-obsidian bg-zinc-50 font-mono min-h-[120px] focus-visible:ring-0 focus-visible:border-peri p-4" 
+                        className="rounded-none border-4 border-obsidian bg-zinc-50 font-mono min-h-[120px] focus-visible:ring-0 focus-visible:border-peri p-4 transition-colors duration-150" 
                         {...field} 
                       />
                     </FormControl>
-                    <FormMessage className="font-mono font-bold text-red-600" />
+                    <FormMessage className="font-mono font-bold text-red-600 animate-bounce" />
                   </FormItem>
                 )}
               />
               
               <Button 
                 type="submit" 
-                className="w-full rounded-none bg-obsidian text-white hover:bg-peri hover:text-obsidian font-mono font-bold text-lg uppercase py-8 border-2 border-transparent hover:border-obsidian transition-colors shadow-[4px_4px_0px_#8f94fb] hover:shadow-[4px_4px_0px_#0b0b0b]"
+                className="w-full rounded-none bg-obsidian text-white hover:bg-peri hover:text-obsidian font-mono font-bold text-xl uppercase py-8 border-4 border-obsidian transition-all duration-150 shadow-[6px_6px_0px_#8f94fb] hover:shadow-[8px_8px_0px_#0b0b0b] hover:-translate-x-1 hover:-translate-y-1 active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-peri"
               >
                 Submit Mission
               </Button>
