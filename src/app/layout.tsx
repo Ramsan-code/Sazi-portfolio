@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Archivo } from "next/font/google";
 import "./globals.css";
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -14,7 +16,7 @@ const archivo = Archivo({
 
 export const metadata: Metadata = {
   title: "Sazi | Graphic Designer",
-  description: "Neo-brutalist graphic designer portfolio",
+  description: "High-converting Neo-Brutalist graphic designer portfolio",
 };
 
 export default function RootLayout({
@@ -23,11 +25,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark scroll-smooth">
       <body
-        className={`${spaceGrotesk.variable} ${archivo.variable} antialiased bg-[#0b0b0b] text-white selection:bg-[#3eb489] selection:text-black min-h-screen overflow-x-hidden`}
+        className={`${spaceGrotesk.variable} ${archivo.variable} antialiased bg-obsidian text-white selection:bg-mint selection:text-black min-h-screen overflow-x-hidden flex flex-col`}
       >
-        {children}
+        <Navigation />
+        <div className="flex-1 mt-24">
+          {children}
+        </div>
+        <Footer />
       </body>
     </html>
   );
