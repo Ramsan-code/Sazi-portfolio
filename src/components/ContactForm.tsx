@@ -1,9 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -28,6 +31,8 @@ const formSchema = z.object({
 });
 
 export function ContactForm() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,9 +42,32 @@ export function ContactForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    alert("Project request submitted securely!");
-    form.reset();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("/api/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send message");
+      }
+
+      toast.success("MISSION RECEIVED. STAND BY FOR TRANSMISSION.", {
+        className: "font-mono font-bold bg-mint text-obsidian border-4 border-obsidian rounded-none",
+      });
+      form.reset();
+    } catch (error) {
+      toast.error("TRANSMISSION FAILED. TRY DIRECT CHANNEL.", {
+        className: "font-mono font-bold bg-red-500 text-white border-4 border-obsidian rounded-none",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -114,9 +142,16 @@ export function ContactForm() {
               
               <Button 
                 type="submit" 
-                className="w-full rounded-none bg-obsidian text-white hover:bg-peri hover:text-obsidian font-mono font-bold text-xl uppercase py-8 border-4 border-obsidian transition-all duration-150 shadow-[6px_6px_0px_#8f94fb] hover:shadow-[8px_8px_0px_#0b0b0b] hover:-translate-x-1 hover:-translate-y-1 active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-peri"
+                disabled={isSubmitting}
+                className="w-full rounded-none bg-obsidian text-white hover:bg-peri hover:text-obsidian font-mono font-bold text-xl uppercase py-8 border-4 border-obsidian transition-all duration-150 shadow-[6px_6px_0px_#8f94fb] hover:shadow-[8px_8px_0px_#0b0b0b] hover:-translate-x-1 hover:-translate-y-1 active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-peri disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Submit Mission
+                {isSubmitting ? (
+                  <span className="flex items-center gap-2">
+                    <Loader2 className="animate-spin" /> SENDING...
+                  </span>
+                ) : (
+                  "Submit Mission"
+                )}
               </Button>
             </form>
           </Form>

@@ -36,3 +36,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# env files
+.env*.local
+.env
+.env.development
+.env.production
+.env.test
+
+# local overrides
+.idea
+.vscode
+*.sublime-project
+*.sublime-workspace
