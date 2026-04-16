@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth">
       <body
-        className={`${spaceGrotesk.variable} ${archivo.variable} antialiased bg-obsidian text-white selection:bg-mint selection:text-black min-h-screen overflow-x-hidden flex flex-col`}
+        className={`${spaceGrotesk.variable} ${archivo.variable} antialiased bg-obsidian text-white selection:bg-mint selection:text-black min-h-screen overflow-x-hidden flex flex-col font-sans`}
       >
         <Navigation />
         <div className="flex-1 mt-24">

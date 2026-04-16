@@ -38,7 +38,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ slug: stri
           animate={{ opacity: 1, y: 0 }}
           className="mb-16"
         >
-          <h1 className="font-heading font-black text-6xl md:text-8xl uppercase tracking-tighter mb-6">{project.title}</h1>
+          <h1 className="font-heading font-black text-6xl md:text-8xl uppercase mb-6">{project.title}</h1>
           <div className="flex flex-wrap gap-4 font-mono text-sm font-bold uppercase text-peri">
             <span className="border-2 border-peri px-4 py-2">{project.category}</span>
             <span className="border-2 border-peri px-4 py-2">{project.role}</span>

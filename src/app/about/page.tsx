@@ -14,7 +14,7 @@ export default function About() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-          className="font-heading font-black text-6xl md:text-8xl uppercase tracking-tighter mb-16"
+          className="font-heading font-black text-6xl md:text-8xl uppercase mb-16"
         >
           Behind The <br/><span className="text-transparent [-webkit-text-stroke:4px_#5E6AD2]">Brutalism.</span>
         </motion.h1>

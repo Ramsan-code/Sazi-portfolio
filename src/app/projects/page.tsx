@@ -19,7 +19,7 @@ export default function Projects() {
         <motion.h1 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="font-heading font-black text-6xl md:text-8xl uppercase tracking-tighter mb-8"
+          className="font-heading font-black text-6xl md:text-8xl uppercase mb-8"
         >
           Curated <br/> <span className="text-transparent [-webkit-text-stroke:4px_#0b0b0b]">Archive.</span>
         </motion.h1>

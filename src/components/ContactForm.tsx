@@ -74,7 +74,7 @@ export function ContactForm() {
     <div id="contact" className="w-full bg-mint text-obsidian py-24 px-4 sm:px-8 md:px-16 lg:px-24 border-t-8 border-obsidian relative z-40">
       <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-16">
         <div className="flex-1 space-y-6">
-          <h2 className="font-heading font-black text-6xl uppercase tracking-tighter shadow-none">
+          <h2 className="font-heading font-black text-6xl uppercase shadow-none">
             Let's <br/> Collaborate
           </h2>
           <p className="font-mono text-lg font-bold">

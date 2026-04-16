@@ -35,12 +35,12 @@ export default function Home() {
             transition={{ duration: 0.8, ease: [0.77, 0, 0.175, 1] }}
             className="relative inline-block group"
           >
-            <h1 className="font-heading font-black text-[15vw] md:text-[9rem] leading-[0.85] tracking-tighter uppercase relative z-10">
+            <h1 className="font-heading font-black text-[15vw] md:text-[9rem] leading-[0.85] uppercase relative z-10 group-hover:animate-glitch">
               Sazi
               <br />
               Stark
             </h1>
-            <div className="absolute top-2 left-3 md:top-4 md:left-6 font-heading font-black text-[15vw] md:text-[9rem] leading-[0.85] tracking-tighter uppercase text-transparent [-webkit-text-stroke:2px_#3eb489] -z-10 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-300">
+            <div className="absolute top-2 left-3 md:top-4 md:left-6 font-heading font-black text-[15vw] md:text-[9rem] leading-[0.85] uppercase text-transparent [-webkit-text-stroke:2px_#3eb489] -z-10 group-hover:translate-x-4 group-hover:translate-y-4 group-hover:[-webkit-text-stroke:2px_#8f94fb] transition-all duration-300">
               Sazi
               <br />
               Stark
@@ -93,7 +93,7 @@ export default function Home() {
           >
             <div className="absolute inset-0 bg-peri translate-x-6 translate-y-6 md:translate-x-10 md:translate-y-10 z-0 transition-all duration-300 group-hover:translate-x-12 group-hover:translate-y-12"></div>
             
-            <div className="relative h-full w-full bg-zinc-900 border-4 border-white overflow-hidden z-10 outline-none transition-all duration-300 group-hover:border-8">
+            <div className="relative h-full w-full bg-zinc-900 border-4 border-white overflow-hidden z-10 outline-none transition-all duration-300 group-hover:border-8 scanline">
               <Image 
                 src="/portrait.png" 
                 alt="Sazi  - Graphic Designer"
@@ -115,7 +115,7 @@ export default function Home() {
       <section className="w-full bg-white text-obsidian py-24 border-t-8 border-obsidian z-10 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-16">
           <div className="flex justify-between items-end mb-16">
-            <h2 className="font-heading font-black text-5xl md:text-7xl uppercase tracking-tighter">
+            <h2 className="font-heading font-black text-5xl md:text-7xl uppercase">
               Featured <br/> Work
             </h2>
             <Link href="/projects" className="hidden md:block font-mono font-bold uppercase tracking-widest text-mint bg-obsidian px-6 py-3 border-4 border-obsidian transition-all duration-150 hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[6px_6px_0px_#5E6AD2]">
