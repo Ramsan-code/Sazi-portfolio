@@ -55,7 +55,7 @@ export default function Home() {
           >
             <div className="h-1 w-12 bg-white"></div>
             <h2 className="font-mono text-xl sm:text-2xl md:text-3xl font-bold tracking-[0.2em] text-peri uppercase">
-              Brand & Motion Designer
+              Graphics designer
             </h2>
           </motion.div>
 
