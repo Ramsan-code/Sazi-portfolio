@@ -13,5 +13,6 @@ const ProfileImageSchema = new Schema<IProfileImage>(
   { timestamps: true }
 );
 
+// IMPORTANT: force single document behavior using fixed collection logic
 export default models.ProfileImage ||
   model<IProfileImage>("ProfileImage", ProfileImageSchema);
