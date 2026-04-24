@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ContactForm } from "./ContactForm";
+
 
 export function Footer({ showContact = true }: { showContact?: boolean }) {
   const pathname = usePathname();
@@ -11,8 +11,7 @@ export function Footer({ showContact = true }: { showContact?: boolean }) {
 
   return (
     <footer className="w-full bg-obsidian flex flex-col relative z-20">
-      {/* Conditionally render Contact Form before footer ticker */}
-      {displayContact && <ContactForm />}
+      
 
       {/* Social Links & Meta */}
       <div className="w-full max-w-7xl mx-auto py-12 px-8 flex flex-col md:flex-row justify-between items-center gap-8 border-t-4 border-white/10">
