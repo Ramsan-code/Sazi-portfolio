@@ -1,35 +1,33 @@
 import type { NextConfig } from "next";
-import path from "node:path";
 
-// Loader path from orchids-visual-edits - use direct resolve to get the actual file
-const loaderPath = require.resolve('orchids-visual-edits/loader.js');
+// Loader path from orchids-visual-edits
+const loaderPath = require.resolve("orchids-visual-edits/loader.js");
 
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: '**',
-      },
-      {
-        protocol: 'http',
-        hostname: '**',
+        protocol: "https",
+        hostname: "res.cloudinary.com", // ✅ only allow Cloudinary
       },
     ],
   },
+
+  // ⚠️ You can keep these for now, but remove later in production
   typescript: {
     ignoreBuildErrors: true,
   },
   eslint: {
     ignoreDuringBuilds: true,
   },
+
   turbopack: {
     rules: {
       "*.{jsx,tsx}": {
-        loaders: [loaderPath]
-      }
-    }
-  }
-} as NextConfig;
+        loaders: [loaderPath],
+      },
+    },
+  },
+};
 
 export default nextConfig;
