@@ -68,7 +68,7 @@ export default function Home() {
         <div className="flex-1 flex justify-center md:justify-end">
           <div className="relative w-[300px] md:w-[400px] h-[400px] border-4 border-white overflow-hidden">
             <Image
-              src={imageUrl || "/portrait.png"}
+              src={imageUrl}
               alt="Profile"
               fill
               className="object-cover"
