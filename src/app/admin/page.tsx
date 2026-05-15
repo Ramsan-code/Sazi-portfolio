@@ -22,7 +22,7 @@ export default function AdminUpload() {
     reader.readAsDataURL(file);
 
     reader.onloadend = async () => {
-      await fetch("/api/upload", {
+      await fetch("/api/project", {
         method: "POST",
         body: JSON.stringify({ image: reader.result }),
         headers: {
