@@ -11,23 +11,29 @@ export function Footer({ showContact = true }: { showContact?: boolean }) {
 
   return (
     <footer className="w-full bg-obsidian flex flex-col relative z-20">
-      
 
-      {/* Social Links & Meta */}
-      <div className="w-full max-w-7xl mx-auto py-12 px-8 flex flex-col md:flex-row justify-between items-center gap-8 border-t-4 border-white/10">
-        <div className="font-heading font-black text-4xl uppercase">
+
+      <div className="w-full max-w-7xl mx-auto py-16 px-8 flex flex-col items-center justify-center gap-6 border-t-4 border-white/10 text-center">
+        <div className="font-heading font-black text-5xl md:text-6xl uppercase">
           Sazi <span className="text-mint">Balasingam</span>
         </div>
-        
-        <div className="flex flex-wrap justify-center gap-y-4 gap-x-8 md:gap-6 font-mono font-bold text-sm tracking-widest uppercase">
-          <Link href="https://linkedin.com" target="_blank" className="hover:text-peri transition-colors">LinkedIn</Link>
-          <Link href="https://twitter.com" target="_blank" className="hover:text-mint transition-colors">Twitter</Link>
-          <Link href="https://instagram.com" target="_blank" className="hover:text-peri transition-colors">Instagram</Link>
-          <Link href="https://github.com" target="_blank" className="hover:text-mint transition-colors">GitHub</Link>
-        </div>
-        
-        <div className="font-mono text-xs text-gray-500">
-          © {new Date().getFullYear()} ALL RIGHTS RESERVED.
+
+        <p className="font-mono text-sm md:text-base text-gray-400 max-w-lg mt-2">
+          Forging high-impact visual identities and digital experiences. Let's create something amazing together.
+        </p>
+
+        <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 font-mono text-xs md:text-sm tracking-widest uppercase mt-6 text-gray-200">
+          <a href="tel:+1234567890" className="hover:text-mint transition-colors duration-300">
+            +1 (234) 567-890
+          </a>
+          <span className="hidden md:block text-gray-600">|</span>
+          <a href="https://yourwebsite.com" target="_blank" rel="noreferrer" className="hover:text-peri transition-colors duration-300">
+            WWW.YOURWEBSITE.COM
+          </a>
+          <span className="hidden md:block text-gray-600">|</span>
+          <span className="hover:text-white transition-colors duration-300">
+            123 CREATIVE STUDIO, DESIGN CITY, NY 10001
+          </span>
         </div>
       </div>
 
@@ -39,13 +45,13 @@ export function Footer({ showContact = true }: { showContact?: boolean }) {
           <span>UX/UI</span><span className="text-white">•</span>
           <span>Typography</span><span className="text-white">•</span>
           <span>Creative Direction</span><span className="text-white">•</span>
-          
+
           <span>Brand Identity</span><span className="text-white">•</span>
           <span>Web Design</span><span className="text-white">•</span>
           <span>UX/UI</span><span className="text-white">•</span>
           <span>Typography</span><span className="text-white">•</span>
           <span>Creative Direction</span><span className="text-white">•</span>
-          
+
           <span>Brand Identity</span><span className="text-white">•</span>
           <span>Web Design</span><span className="text-white">•</span>
           <span>UX/UI</span><span className="text-white">•</span>
