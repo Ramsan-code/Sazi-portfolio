@@ -1,15 +1,15 @@
 "use client";
 
-import { use } from "react";
+import { use, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { PROJECTS } from "@/data/projects";
 import { notFound } from "next/navigation";
-import { ProjectSandbox } from "@/components/sandboxes/ProjectSandbox";
 import { StealthDisclosure } from "@/components/StealthDisclosure";
 
 export default function ProjectDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
+  const [showDetails, setShowDetails] = useState(false);
   
   const project = PROJECTS.find(p => p.slug === slug);
 
@@ -61,67 +61,68 @@ export default function ProjectDetail({ params }: { params: Promise<{ slug: stri
             }} 
            />
            <div className="absolute inset-0 flex items-center justify-center">
-             <div className={`w-32 h-32 rounded-full animate-bounce ${colorMap[project.color] || "bg-white"}`} style={{ animationDuration: '4s' }} />
+             {!showDetails && (
+               <button 
+                 onClick={() => setShowDetails(true)}
+                 className="font-mono text-sm font-bold uppercase tracking-widest border-2 border-mint text-mint hover:bg-mint hover:text-obsidian transition-colors px-8 py-4 bg-zinc-900/80 backdrop-blur-sm z-10"
+               >
+                 View Full Details
+               </button>
+             )}
            </div>
         </motion.div>
 
-        {/* Stealth Section (NEW: Progressive Disclosure) */}
-        {project.confidentialContent && (
+
+
+        {showDetails && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="mb-24"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            <StealthDisclosure 
-              content={project.confidentialContent} 
-              label="Stealth Case Logic (Locked)" 
-            />
+            {/* Stealth Section (NEW: Progressive Disclosure) */}
+            {project.confidentialContent && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                className="mb-24"
+              >
+                <StealthDisclosure 
+                  content={project.confidentialContent} 
+                  label="Stealth Case Logic (Locked)" 
+                />
+              </motion.div>
+            )}
+
+            {/* Content Structure */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+              <div className="md:col-span-1 space-y-8 bg-zinc-900/50 p-6 border-l-4 border-peri h-fit">
+                <h3 className="font-heading border-b-2 border-zinc-700 font-bold uppercase text-white pb-4 tracking-widest text-xl">The Results</h3>
+                <ul className="space-y-4">
+                   {project.results.map((res, i) => (
+                     <li key={i} className="font-mono text-sm font-bold text-mint uppercase">
+                       → {res}
+                     </li>
+                   ))}
+                </ul>
+              </div>
+              
+              <div className="md:col-span-2 space-y-16">
+                <div>
+                  <h3 className="font-mono text-2xl font-bold uppercase text-white mb-6 border-b-4 border-mint pb-2 inline-block">The Challenge</h3>
+                  <p className="font-mono text-lg leading-relaxed text-gray-300">{project.challenge}</p>
+                </div>
+                <div>
+                  <h3 className="font-mono text-2xl font-bold uppercase text-white mb-6 border-b-4 border-peri pb-2 inline-block">The Solution</h3>
+                  <p className="font-mono text-lg leading-relaxed text-gray-300">{project.solution}</p>
+                </div>
+              </div>
+            </div>
           </motion.div>
         )}
 
-        {/* Content Structure */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
-          <div className="md:col-span-1 space-y-8 bg-zinc-900/50 p-6 border-l-4 border-peri h-fit">
-            <h3 className="font-heading border-b-2 border-zinc-700 font-bold uppercase text-white pb-4 tracking-widest text-xl">The Results</h3>
-            <ul className="space-y-4">
-               {project.results.map((res, i) => (
-                 <li key={i} className="font-mono text-sm font-bold text-mint uppercase">
-                   → {res}
-                 </li>
-               ))}
-            </ul>
-          </div>
-          
-          <div className="md:col-span-2 space-y-16">
-            <div>
-              <h3 className="font-mono text-2xl font-bold uppercase text-white mb-6 border-b-4 border-mint pb-2 inline-block">The Challenge</h3>
-              <p className="font-mono text-lg leading-relaxed text-gray-300">{project.challenge}</p>
-            </div>
-            <div>
-              <h3 className="font-mono text-2xl font-bold uppercase text-white mb-6 border-b-4 border-peri pb-2 inline-block">The Solution</h3>
-              <p className="font-mono text-lg leading-relaxed text-gray-300">{project.solution}</p>
-            </div>
-          </div>
-        </div>
 
-        {/* Interactive Showcase Section */}
-        {project.hasSandbox && (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="mt-24"
-          >
-            <ProjectSandbox 
-              type={project.sandboxType!} 
-              projectTitle={project.title}
-              beforeTheme={project.beforeTheme}
-              afterTheme={project.afterTheme}
-            />
-          </motion.div>
-        )}
 
       </div>
     </div>
