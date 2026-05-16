@@ -60,9 +60,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ slug: stri
               backgroundSize: "20px 20px" 
             }} 
            />
-           <div className="absolute inset-0 flex items-center justify-center">
-             <div className={`w-32 h-32 rounded-full animate-bounce ${colorMap[project.color] || "bg-white"}`} style={{ animationDuration: '4s' }} />
-           </div>
+
         </motion.div>
 
         {!showDetails && (
