@@ -61,18 +61,20 @@ export default function ProjectDetail({ params }: { params: Promise<{ slug: stri
             }} 
            />
            <div className="absolute inset-0 flex items-center justify-center">
-             {!showDetails && (
-               <button 
-                 onClick={() => setShowDetails(true)}
-                 className="font-mono text-sm font-bold uppercase tracking-widest border-2 border-mint text-mint hover:bg-mint hover:text-obsidian transition-colors px-8 py-4 bg-zinc-900/80 backdrop-blur-sm z-10"
-               >
-                 View Full Details
-               </button>
-             )}
+             <div className={`w-32 h-32 rounded-full animate-bounce ${colorMap[project.color] || "bg-white"}`} style={{ animationDuration: '4s' }} />
            </div>
         </motion.div>
 
-
+        {!showDetails && (
+          <div className="w-full flex justify-center mb-24">
+            <button 
+              onClick={() => setShowDetails(true)}
+              className="font-mono text-sm font-bold uppercase tracking-widest border-2 border-mint text-mint hover:bg-mint hover:text-obsidian transition-colors px-8 py-4"
+            >
+              View Full Details
+            </button>
+          </div>
+        )}
 
         {showDetails && (
           <motion.div
