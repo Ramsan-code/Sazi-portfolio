@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { PROJECTS } from "@/data/projects";
 import { BackgroundAccents } from "@/components/BackgroundAccents";
 import { ProjectCard } from "@/components/ProjectCard";
-import { ContactForm } from "@/components/ContactForm";
+import { SocialSection } from "@/components/SocialSection";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -34,10 +34,10 @@ export default function Home() {
 
       {/* HERO SECTION */}
       <section className="relative w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-16 px-4 md:px-16 pb-24">
-        
+
         {/* LEFT */}
         <div className="flex-1 flex flex-col space-y-6 pt-12">
-          <h1 className="font-black uppercase text-[15vw] md:text-[9rem]">
+          <h1 className="font-black uppercase text-[15vw] md:text-[9rem] leading-none">
             Sazi
             <br />
             <span className="text-peri text-[9vw] md:text-[5.5rem]">
@@ -45,13 +45,19 @@ export default function Home() {
             </span>
           </h1>
 
-          <h2 className="text-peri font-mono text-2xl uppercase">
-            Graphics Designer
-          </h2>
-
-          <p className="text-gray-300 max-w-md">
-            Forging high-impact visual identities and digital experiences.
-          </p>
+          <div className="flex flex-col space-y-1">
+            <h2 className="text-peri font-mono text-2xl uppercase">
+              Graphics Designer
+            </h2>
+            <motion.h3
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+              className="text-white font-mono text-xs md:text-sm font-medium uppercase tracking-wider opacity-90"
+            >
+              Logo Design | Poster Design | Social Media Poster
+            </motion.h3>
+          </div>
 
           <div className="flex gap-4">
             <Link href="/projects" className="bg-mint px-6 py-3 font-bold">
@@ -93,8 +99,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CONTACT SECTION */}
-      <ContactForm />
+      <SocialSection />
+
     </div>
   );
 }
