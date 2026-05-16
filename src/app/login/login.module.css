@@ -1,0 +1,146 @@
+.pageContainer {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f0;
+  padding: 1rem;
+}
+
+.loginCard {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 360px; /* Resized the login page card to be slightly more compact */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.adminBadge {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background-color: #fee2e2;
+  color: #e11d48;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #0b0b0b;
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #888888;
+  letter-spacing: 0.05em;
+  margin-bottom: 2rem;
+}
+
+.formGroup {
+  margin-bottom: 1.25rem;
+}
+
+.label {
+  display: block;
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #888888;
+  margin-bottom: 0.5rem;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.inputField {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  border: 1px solid #d6e4f0;
+  background-color: #eef4fa;
+  border-radius: 6px;
+  outline: none;
+  color: #111111;
+  transition: all 0.2s ease-in-out;
+}
+
+.inputField:focus {
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 2px rgba(147, 197, 253, 0.3);
+}
+
+.inputField::placeholder {
+  color: #9ca3af;
+}
+
+.inputField.passwordInput {
+  padding-right: 2.5rem;
+}
+
+.eyeButton {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.eyeButton:hover {
+  color: #4b5563;
+}
+
+.errorText {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: #dc2626;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 1rem;
+  background-color: #0b0b0b;
+  color: #ffffff;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 1.5rem;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background-color: #27272a;
+}
+
+.submitBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
