@@ -43,7 +43,8 @@ next-env.d.ts
 .env.development
 .env.production
 .env.test
-
+.agents
+.codex
 # local overrides
 .idea
 .vscode
