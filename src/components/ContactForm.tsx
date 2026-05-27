@@ -58,12 +58,14 @@ export function ContactForm() {
       }
 
       toast.success("MISSION RECEIVED. STAND BY FOR TRANSMISSION.", {
-        className: "font-mono font-bold bg-mint text-obsidian border-4 border-obsidian rounded-none",
+        className:
+          "font-mono font-bold bg-mint text-obsidian border-4 border-obsidian rounded-none",
       });
       form.reset();
     } catch (error) {
       toast.error("TRANSMISSION FAILED. TRY DIRECT CHANNEL.", {
-        className: "font-mono font-bold bg-red-500 text-white border-4 border-obsidian rounded-none",
+        className:
+          "font-mono font-bold bg-red-500 text-white border-4 border-obsidian rounded-none",
       });
     } finally {
       setIsSubmitting(false);
@@ -71,90 +73,115 @@ export function ContactForm() {
   }
 
   return (
-    <div id="contact" className="w-full bg-mint text-obsidian py-24 px-4 sm:px-8 md:px-16 lg:px-24 border-t-8 border-obsidian relative z-40">
-      <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-16">
-        <div className="flex-1 space-y-6">
-          <h2 className="font-heading font-black text-6xl uppercase shadow-none">
-            Let's <br/> Collaborate
-          </h2>
-          <p className="font-mono text-lg font-bold">
-            Ready to shatter expectations and build something extraordinary? Drop your details below.
-          </p>
-        </div>
-        
-        <div className="flex-1 bg-white p-8 border-8 border-obsidian shadow-[12px_12px_0px_#0b0b0b]">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-mono font-bold uppercase text-obsidian">Name</FormLabel>
-                    <FormControl>
-                      <Input 
-                        placeholder="ALICE WONDERLAND" 
-                        className="rounded-none border-4 border-obsidian bg-zinc-50 font-mono focus-visible:ring-0 focus-visible:border-peri p-6 transition-colors duration-150" 
-                        {...field} 
-                      />
-                    </FormControl>
-                    <FormMessage className="font-mono font-bold text-red-600 animate-bounce" />
-                  </FormItem>
-                )}
-              />
-              
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-mono font-bold uppercase text-obsidian">Email</FormLabel>
-                    <FormControl>
-                      <Input 
-                        type="email"
-                        placeholder="ALICE@RAD-STARTUP.COM" 
-                        className="rounded-none border-4 border-obsidian bg-zinc-50 font-mono focus-visible:ring-0 focus-visible:border-peri p-6 transition-colors duration-150" 
-                        {...field} 
-                      />
-                    </FormControl>
-                    <FormMessage className="font-mono font-bold text-red-600 animate-bounce" />
-                  </FormItem>
-                )}
-              />
+    <div
+      id="contact"
+      className="w-full bg-mint text-obsidian border-t-8 border-obsidian relative z-40"
+    >
+      {/* 
+        Two-zone layout:
+        - Mobile/tablet (<lg): stacked, full-width, padded
+        - Desktop (≥lg): side-by-side grid with explicit column sizes
+      */}
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 xl:px-16 py-12 sm:py-16 xl:py-24 overflow-hidden">
+        <div className="flex flex-col xl:grid xl:grid-cols-[1fr_500px] gap-10 xl:gap-16 items-start">
 
-              <FormField
-                control={form.control}
-                name="message"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-mono font-bold uppercase text-obsidian">Message</FormLabel>
-                    <FormControl>
-                      <Textarea 
-                        placeholder="TELL ME ABOUT YOUR BRUTAL PROJECT..." 
-                        className="rounded-none border-4 border-obsidian bg-zinc-50 font-mono min-h-[120px] focus-visible:ring-0 focus-visible:border-peri p-4 transition-colors duration-150" 
-                        {...field} 
-                      />
-                    </FormControl>
-                    <FormMessage className="font-mono font-bold text-red-600 animate-bounce" />
-                  </FormItem>
-                )}
-              />
-              
-              <Button 
-                type="submit" 
-                disabled={isSubmitting}
-                className="w-full rounded-none bg-obsidian text-white hover:bg-peri hover:text-obsidian font-mono font-bold text-xl uppercase py-8 border-4 border-obsidian transition-all duration-150 shadow-[6px_6px_0px_#8f94fb] hover:shadow-[8px_8px_0px_#0b0b0b] hover:-translate-x-1 hover:-translate-y-1 active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-peri disabled:opacity-50 disabled:cursor-not-allowed"
+          {/* Left: heading + subtitle */}
+          <div className="w-full min-w-0 space-y-4 sm:space-y-6">
+            <h2 className="font-heading font-black text-2xl sm:text-5xl uppercase leading-none tracking-normal">
+              <span className="block">Let's</span>
+              <span className="block whitespace-nowrap">Collaborate</span>
+            </h2>
+            <p className="font-mono text-sm sm:text-lg font-bold max-w-sm leading-relaxed">
+              Ready to shatter expectations and build something extraordinary?
+              Drop your details below.
+            </p>
+          </div>
+
+          {/* Right: form card — fixed width on desktop, full width on mobile */}
+          <div className="w-full min-w-0 bg-white p-4 sm:p-8 border-4 sm:border-8 border-obsidian shadow-[4px_4px_0px_#0b0b0b] sm:shadow-[8px_8px_0px_#0b0b0b]">
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="min-w-0 space-y-5 sm:space-y-6"
               >
-                {isSubmitting ? (
-                  <span className="flex items-center gap-2">
-                    <Loader2 className="animate-spin" /> SENDING...
-                  </span>
-                ) : (
-                  "Submit Mission"
-                )}
-              </Button>
-            </form>
-          </Form>
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-mono font-bold uppercase text-obsidian text-sm sm:text-base">
+                        Name
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="ALICE WONDERLAND"
+                          className="rounded-none border-4 border-obsidian bg-zinc-50 font-mono focus-visible:ring-0 focus-visible:border-peri p-3 sm:p-6 text-xs sm:text-base transition-colors duration-150"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage className="font-mono font-bold text-red-600 animate-bounce text-xs sm:text-sm" />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-mono font-bold uppercase text-obsidian text-sm sm:text-base">
+                        Email
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="ALICE@RAD-STARTUP.COM"
+                          className="rounded-none border-4 border-obsidian bg-zinc-50 font-mono focus-visible:ring-0 focus-visible:border-peri p-3 sm:p-6 text-xs sm:text-base transition-colors duration-150"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage className="font-mono font-bold text-red-600 animate-bounce text-xs sm:text-sm" />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-mono font-bold uppercase text-obsidian text-sm sm:text-base">
+                        Message
+                      </FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="TELL ME ABOUT YOUR BRUTAL PROJECT..."
+                          className="rounded-none border-4 border-obsidian bg-zinc-50 font-mono min-h-[100px] sm:min-h-[120px] focus-visible:ring-0 focus-visible:border-peri p-3 sm:p-4 text-xs sm:text-base transition-colors duration-150"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage className="font-mono font-bold text-red-600 animate-bounce text-xs sm:text-sm" />
+                    </FormItem>
+                  )}
+                />
+
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full rounded-none bg-obsidian text-white hover:bg-peri hover:text-obsidian font-mono font-bold text-sm sm:text-xl uppercase py-6 sm:py-8 border-4 border-obsidian transition-all duration-150 shadow-[4px_4px_0px_#8f94fb] sm:shadow-[6px_6px_0px_#8f94fb] hover:shadow-[6px_6px_0px_#0b0b0b] sm:hover:shadow-[8px_8px_0px_#0b0b0b] hover:-translate-x-1 hover:-translate-y-1 active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-peri disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? (
+                    <span className="flex items-center gap-2">
+                      <Loader2 className="animate-spin" /> SENDING...
+                    </span>
+                  ) : (
+                    "Submit Mission"
+                  )}
+                </Button>
+              </form>
+            </Form>
+          </div>
+
         </div>
       </div>
     </div>
