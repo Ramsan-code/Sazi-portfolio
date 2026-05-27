@@ -62,7 +62,7 @@ export function ContactForm() {
           "font-mono font-bold bg-mint text-obsidian border-4 border-obsidian rounded-none",
       });
       form.reset();
-    } catch (error) {
+    } catch {
       toast.error("TRANSMISSION FAILED. TRY DIRECT CHANNEL.", {
         className:
           "font-mono font-bold bg-red-500 text-white border-4 border-obsidian rounded-none",
@@ -88,12 +88,12 @@ export function ContactForm() {
           {/* Left: heading + subtitle */}
           <div className="w-full min-w-0 space-y-4 sm:space-y-6">
             <h2 className="font-heading font-black text-2xl sm:text-5xl uppercase leading-none tracking-normal">
-              <span className="block">Let's</span>
+              <span className="block">Let&apos;s</span>
               <span className="block whitespace-nowrap">Collaborate</span>
             </h2>
             <p className="font-mono text-sm sm:text-lg font-bold max-w-sm leading-relaxed">
-              Ready to shatter expectations and build something extraordinary?
-              Drop your details below.
+              Ready for a sharper brand identity, campaign visual, or digital
+              design system? Send the brief and I will map the next move.
             </p>
           </div>
 
@@ -155,7 +155,7 @@ export function ContactForm() {
                       </FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="TELL ME ABOUT YOUR BRUTAL PROJECT..."
+                          placeholder="TELL ME ABOUT YOUR BRAND, LOGO, POSTER, OR UI/UX PROJECT..."
                           className="rounded-none border-4 border-obsidian bg-zinc-50 font-mono min-h-[100px] sm:min-h-[120px] focus-visible:ring-0 focus-visible:border-peri p-3 sm:p-4 text-xs sm:text-base transition-colors duration-150"
                           {...field}
                         />
@@ -175,7 +175,7 @@ export function ContactForm() {
                       <Loader2 className="animate-spin" /> SENDING...
                     </span>
                   ) : (
-                    "Submit Mission"
+                    "Request Design Quote"
                   )}
                 </Button>
               </form>

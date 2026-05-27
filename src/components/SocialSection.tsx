@@ -28,14 +28,14 @@ const Adobe = ({ className }: { className?: string }) => (
 );
 
 const SOCIALS = [
-  { name: "LinkedIn", icon: Linkedin, href: "#", color: "group-hover:text-[#0a66c2]" },
-  { name: "X", icon: X, href: "#", color: "group-hover:text-[#000000]" },
-  { name: "Instagram", icon: Instagram, href: "#", color: "group-hover:text-[#E1306C]" },
-  { name: "Facebook", icon: Facebook, href: "#", color: "group-hover:text-[#1877F2]" },
-  { name: "Behance", icon: Behance, href: "#", color: "group-hover:text-[#1769ff]" },
-  { name: "Flickr", icon: Flickr, href: "#", color: "group-hover:text-[#ff0084]" },
-  { name: "Threads", icon: Threads, href: "#", color: "group-hover:text-[#000000]" },
-  { name: "Adobe", icon: Adobe, href: "#", color: "group-hover:text-[#FF0000]" },
+  { name: "LinkedIn", icon: Linkedin, href: "https://www.linkedin.com/in/sazibalasingam", color: "group-hover:text-[#0a66c2]" },
+  { name: "X", icon: X, href: "https://x.com/sazibalasingam", color: "group-hover:text-[#000000]" },
+  { name: "Instagram", icon: Instagram, href: "https://www.instagram.com/sazibalasingam", color: "group-hover:text-[#E1306C]" },
+  { name: "Facebook", icon: Facebook, href: "https://www.facebook.com/sazibalasingam", color: "group-hover:text-[#1877F2]" },
+  { name: "Behance", icon: Behance, href: "https://www.behance.net/sazibalasingam", color: "group-hover:text-[#1769ff]" },
+  { name: "Flickr", icon: Flickr, href: "https://www.flickr.com/people/sazibalasingam", color: "group-hover:text-[#ff0084]" },
+  { name: "Threads", icon: Threads, href: "https://www.threads.net/@sazibalasingam", color: "group-hover:text-[#000000]" },
+  { name: "Adobe", icon: Adobe, href: "https://www.behance.net/sazibalasingam", color: "group-hover:text-[#FF0000]" },
 ];
 
 export function SocialSection() {
@@ -43,7 +43,7 @@ export function SocialSection() {
     <section className="w-full bg-white py-24 text-black relative z-10">
       <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 text-center">
         <h2 className="text-3xl md:text-5xl font-heading font-black uppercase mb-12">
-          Find Me <span className="text-peri">On</span>
+          Connect With This <span className="text-peri">Graphic Designer</span>
         </h2>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -55,6 +55,7 @@ export function SocialSection() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`Open Sazi Balasingam on ${social.name}`}
                 initial={{ opacity: 0, scale: 0.8, y: 20 }}
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true }}

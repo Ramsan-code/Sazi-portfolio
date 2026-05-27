@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { siteConfig } from "@/lib/seo";
 
 type FooterProps = {
   showContact?: boolean;
@@ -65,8 +66,9 @@ export function Footer({ showContact = true }: FooterProps) {
           "
         >
           Forging high-impact visual identities and digital experiences.
-          Creating modern websites, branding systems, and user experiences
-          that help businesses stand out across digital platforms.
+          Creating brand identity systems, logo design, poster design, social
+          media graphics, modern websites, and user experiences that help
+          businesses stand out across digital platforms.
         </p>
 
         {/* CONTACT DETAILS */}
@@ -84,20 +86,20 @@ export function Footer({ showContact = true }: FooterProps) {
         >
           {/* PHONE */}
           <a
-            href="tel:+1234567890"
+            href={`tel:${siteConfig.phone}`}
             className="
               break-all transition-colors duration-300
               hover:text-mint
             "
           >
-            +1 (234) 567-890
+            +1 (555) 123-4567
           </a>
 
           <span className="hidden lg:block text-gray-600">|</span>
 
           {/* WEBSITE */}
           <a
-            href="https://yourwebsite.com"
+            href={siteConfig.url}
             target="_blank"
             rel="noreferrer"
             className="
@@ -105,7 +107,7 @@ export function Footer({ showContact = true }: FooterProps) {
               hover:text-peri
             "
           >
-            www.yourwebsite.com
+            sazibalasingam.com
           </a>
 
           <span className="hidden lg:block text-gray-600">|</span>
@@ -119,7 +121,7 @@ export function Footer({ showContact = true }: FooterProps) {
               text-gray-300
             "
           >
-            123 Creative Studio, Design City, NY 10001
+            {siteConfig.location}
           </p>
         </div>
 
@@ -141,7 +143,7 @@ export function Footer({ showContact = true }: FooterProps) {
                 md:text-sm
               "
             >
-              Let&apos;s Work Together
+              Start A Design Project
             </Link>
           </div>
         )}

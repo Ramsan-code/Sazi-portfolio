@@ -53,7 +53,7 @@ export function Navigation() {
   const links = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
-    { href: "/projects", label: "Work" },
+    { href: "/projects", label: "Portfolio" },
     { href: "/contact", label: "Contact" },
   ];
 
@@ -81,6 +81,7 @@ export function Navigation() {
           {/* LOGO */}
           <Link
             href="/"
+            aria-label="Sazi Balasingam graphic design portfolio home"
             className="font-heading font-black text-lg sm:text-xl md:text-2xl uppercase hover:text-mint transition-colors relative z-50"
           >
             Sazi Balasingam
@@ -122,7 +123,8 @@ export function Navigation() {
 
           {/* MOBILE MENU BUTTON */}
           <button
-            aria-label="Toggle Menu"
+            aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isMobileMenuOpen}
             className="md:hidden text-white p-3 rounded-lg active:scale-95 transition-transform z-50"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
