@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
+import { requireAdmin } from "@/lib/adminAuth";
+import { getErrorMessage } from "@/lib/errors";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -11,11 +13,32 @@ cloudinary.config({
 // Body: { image: "data:image/...;base64,..." }
 export async function POST(req: NextRequest) {
   try {
+    const unauthorized = requireAdmin(req);
+    if (unauthorized) return unauthorized;
+
     const { image } = await req.json();
 
     if (!image) {
       return NextResponse.json(
         { success: false, message: "No image provided" },
+        { status: 400 }
+      );
+    }
+
+    if (
+      typeof image !== "string" ||
+      !/^data:image\/(png|jpe?g|webp|gif);base64,/i.test(image)
+    ) {
+      return NextResponse.json(
+        { success: false, message: "Only png, jpg, webp, or gif images are allowed" },
+        { status: 400 }
+      );
+    }
+
+    const sizeInBytes = Math.ceil((image.split(",")[1]?.length || 0) * 0.75);
+    if (sizeInBytes > 5 * 1024 * 1024) {
+      return NextResponse.json(
+        { success: false, message: "Image must be smaller than 5MB" },
         { status: 400 }
       );
     }
@@ -35,9 +58,9 @@ export async function POST(req: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { success: false, message: error.message || "Upload failed" },
+      { success: false, message: getErrorMessage(error, "Upload failed") },
       { status: 500 }
     );
   }

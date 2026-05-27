@@ -29,7 +29,7 @@ export default async function EditProjectPage({ params }: EditProjectPageProps) 
       <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">
         <div className="text-center">
           <p className="text-zinc-400">Project not found.</p>
-          <Link href="/api/project" className="text-white underline mt-4 block">
+          <Link href="/admin/projects" className="text-white underline mt-4 block">
             Back to projects
           </Link>
         </div>
@@ -49,7 +49,7 @@ export default async function EditProjectPage({ params }: EditProjectPageProps) 
         <div>
           <h1 className="text-xl font-bold tracking-tight">Edit Project</h1>
           <p className="text-zinc-500 text-sm mt-0.5 truncate max-w-xs">
-            {(project as any).name}
+            {project.name}
           </p>
         </div>
       </div>

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import Category from "@/app/models/Category";
 import SubCategory from "@/app/models/Subcategory";
+import { getErrorMessage } from "@/lib/errors";
 
 const categories = [
   { name: "Graphics Design", slug: "graphics-design" },
@@ -20,6 +21,13 @@ const subcategories = [
 // GET /api/seed
 export async function GET() {
   try {
+    if (process.env.NODE_ENV === "production") {
+      return NextResponse.json(
+        { success: false, message: "Seed endpoint is disabled in production" },
+        { status: 403 }
+      );
+    }
+
     await dbConnect();
 
     // Clear existing data
@@ -60,9 +68,9 @@ export async function GET() {
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { success: false, message: error.message || "Seed failed" },
+      { success: false, message: getErrorMessage(error, "Seed failed") },
       { status: 500 }
     );
   }

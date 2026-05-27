@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { ArrowLeft } from "lucide-react";
 
 interface Project {
   _id: string;
@@ -19,13 +21,27 @@ export default function AdminProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [error, setError] = useState("");
 
   const fetchProjects = async () => {
     setLoading(true);
-    const res = await fetch("/api/project");
-    const data = await res.json();
-    setProjects(data.data || []);
-    setLoading(false);
+    setError("");
+
+    try {
+      const res = await fetch("/api/project");
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Failed to load projects.");
+      }
+
+      setProjects(data.data || []);
+    } catch (err) {
+      setProjects([]);
+      setError(err instanceof Error ? err.message : "Failed to load projects.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -36,7 +52,7 @@ export default function AdminProjectsPage() {
     if (!confirm("Are you sure you want to delete this project?")) return;
     setDeletingId(id);
     try {
-      const res = await fetch(`/api/projects/${id}`, { method: "DELETE" });
+      const res = await fetch(`/api/project/${id}`, { method: "DELETE" });
       const data = await res.json();
       if (data.success) {
         setProjects((prev) => prev.filter((p) => p._id !== id));
@@ -55,9 +71,18 @@ export default function AdminProjectsPage() {
 
       {/* Header */}
       <div className="border-b border-zinc-800 px-6 py-5 flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-bold tracking-tight">Projects</h1>
-          <p className="text-zinc-500 text-sm mt-0.5">{projects.length} total</p>
+        <div className="flex items-center gap-4">
+          <Link
+            href="/admin/dashboard"
+            aria-label="Back to dashboard"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-800 text-zinc-400 hover:border-zinc-600 hover:text-white transition-colors"
+          >
+            <ArrowLeft size={18} />
+          </Link>
+          <div>
+            <h1 className="text-xl font-bold tracking-tight">Projects</h1>
+            <p className="text-zinc-500 text-sm mt-0.5">{projects.length} total</p>
+          </div>
         </div>
         <Link
           href="/admin/projects/new"
@@ -71,6 +96,17 @@ export default function AdminProjectsPage() {
         {loading ? (
           <div className="flex items-center justify-center py-24 text-zinc-600">
             Loading...
+          </div>
+        ) : error ? (
+          <div className="flex flex-col items-center justify-center py-24 text-center">
+            <p className="text-red-400 font-medium">{error}</p>
+            <button
+              type="button"
+              onClick={fetchProjects}
+              className="mt-6 bg-white text-black text-sm font-bold px-5 py-2.5 rounded-lg hover:bg-zinc-200 transition-colors uppercase tracking-widest"
+            >
+              Retry
+            </button>
           </div>
         ) : projects.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-24 text-center">
@@ -95,9 +131,11 @@ export default function AdminProjectsPage() {
               >
                 {/* Image */}
                 <div className="relative h-44 bg-zinc-800 overflow-hidden">
-                  <img
+                  <Image
                     src={project.img}
                     alt={project.name}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   {/* Category badge */}

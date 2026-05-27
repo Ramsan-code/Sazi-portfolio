@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import Project from "@/app/models/Project";
+import { requireAdmin } from "@/lib/adminAuth";
+import { getErrorMessage } from "@/lib/errors";
 
 // GET /api/project
 // GET /api/project?category_id=xxx
@@ -13,7 +15,7 @@ export async function GET(req: NextRequest) {
     const category_id = searchParams.get("category_id");
     const subcategory_id = searchParams.get("subcategory_id");
 
-    const filter: Record<string, any> = {};
+    const filter: Record<string, string> = {};
     if (category_id) filter.category_id = category_id;
     if (subcategory_id) filter.subcategory_id = subcategory_id;
 
@@ -23,7 +25,7 @@ export async function GET(req: NextRequest) {
       .sort({ created_at: -1 });
 
     return NextResponse.json({ success: true, data: projects }, { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { success: false, message: "Failed to fetch projects" },
       { status: 500 }
@@ -34,6 +36,9 @@ export async function GET(req: NextRequest) {
 // POST /api/project
 export async function POST(req: NextRequest) {
   try {
+    const unauthorized = requireAdmin(req);
+    if (unauthorized) return unauthorized;
+
     await dbConnect();
 
     const body = await req.json();
@@ -57,9 +62,9 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ success: true, data: project }, { status: 201 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { success: false, message: error.message || "Failed to create project" },
+      { success: false, message: getErrorMessage(error, "Failed to create project") },
       { status: 500 }
     );
   }

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import Category from "@/app/models/Category";
 import SubCategory from "@/app/models/Subcategory";
+import { requireAdmin } from "@/lib/adminAuth";
+import { getErrorMessage } from "@/lib/errors";
 
 // GET /api/categories/[id]
 export async function GET(
@@ -28,7 +30,7 @@ export async function GET(
       { success: true, data: { ...category.toObject(), subcategories } },
       { status: 200 }
     );
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { success: false, message: "Failed to fetch category" },
       { status: 500 }
@@ -42,6 +44,9 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const unauthorized = requireAdmin(req);
+    if (unauthorized) return unauthorized;
+
     await connectDB();
     const { id } = await params;
 
@@ -65,9 +70,9 @@ export async function PUT(
     }
 
     return NextResponse.json({ success: true, data: category }, { status: 200 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { success: false, message: error.message || "Failed to update category" },
+      { success: false, message: getErrorMessage(error, "Failed to update category") },
       { status: 500 }
     );
   }
@@ -79,6 +84,9 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const unauthorized = requireAdmin(req);
+    if (unauthorized) return unauthorized;
+
     await connectDB();
     const { id } = await params;
 
@@ -98,7 +106,7 @@ export async function DELETE(
       { success: true, message: "Category and its subcategories deleted successfully" },
       { status: 200 }
     );
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { success: false, message: "Failed to delete category" },
       { status: 500 }

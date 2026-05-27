@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import Project from "@/app/models/Project";
 import cloudinary from "@/lib/cloudinary";
+import { requireAdmin } from "@/lib/adminAuth";
+import { getErrorMessage } from "@/lib/errors";
 
 // GET /api/projects/[id]
 export async function GET(
@@ -24,7 +26,7 @@ export async function GET(
     }
 
     return NextResponse.json({ success: true, data: project }, { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { success: false, message: "Failed to fetch project" },
       { status: 500 }
@@ -38,6 +40,9 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const unauthorized = requireAdmin(req);
+    if (unauthorized) return unauthorized;
+
     await dbConnect();
     const { id } = await params;
 
@@ -52,10 +57,8 @@ export async function PUT(
       );
     }
 
-    // If a new image is uploaded, delete the old one from Cloudinary
-    if (img_public_id && img_public_id !== existing.img_public_id) {
-      await cloudinary.uploader.destroy(existing.img_public_id);
-    }
+    const shouldDeleteOldImage =
+      Boolean(img_public_id) && img_public_id !== existing.img_public_id;
 
     const project = await Project.findByIdAndUpdate(
       id,
@@ -73,10 +76,15 @@ export async function PUT(
       .populate("category_id", "name slug")
       .populate("subcategory_id", "name slug");
 
+    // Delete the previous Cloudinary asset only after MongoDB update succeeds.
+    if (shouldDeleteOldImage && existing.img_public_id) {
+      await cloudinary.uploader.destroy(existing.img_public_id);
+    }
+
     return NextResponse.json({ success: true, data: project }, { status: 200 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { success: false, message: error.message || "Failed to update project" },
+      { success: false, message: getErrorMessage(error, "Failed to update project") },
       { status: 500 }
     );
   }
@@ -88,6 +96,9 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const unauthorized = requireAdmin(req);
+    if (unauthorized) return unauthorized;
+
     await dbConnect();
     const { id } = await params;
 
@@ -109,7 +120,7 @@ export async function DELETE(
       { success: true, message: "Project and image deleted successfully" },
       { status: 200 }
     );
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { success: false, message: "Failed to delete project" },
       { status: 500 }

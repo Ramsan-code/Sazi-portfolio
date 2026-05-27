@@ -2,61 +2,186 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { siteConfig } from "@/lib/seo";
 
+type FooterProps = {
+  showContact?: boolean;
+};
 
-export function Footer({ showContact = true }: { showContact?: boolean }) {
+export function Footer({ showContact = true }: FooterProps) {
   const pathname = usePathname();
-  // Override showContact to false if we are on the dedicated contact page
-  const displayContact = pathname === "/contact" ? false : showContact;
+
+  // Hide CTA on contact page
+  const shouldShowContact =
+    pathname !== "/contact" && showContact;
+
+  const tickerItems = [
+    "Brand Identity",
+    "Web Design",
+    "UX/UI",
+    "Typography",
+    "Creative Direction",
+    "Graphic Design",
+    "Frontend Development",
+    "Motion Design",
+  ];
 
   return (
-    <footer className="w-full bg-obsidian flex flex-col relative z-20">
-
-
-      <div className="w-full max-w-7xl mx-auto py-16 px-8 flex flex-col items-center justify-center gap-6 border-t-4 border-white/10 text-center">
-        <div className="font-heading font-black text-5xl md:text-6xl uppercase">
+    <footer className="relative z-20 w-full overflow-hidden bg-obsidian">
+      {/* MAIN FOOTER */}
+      <div
+        className="
+          mx-auto flex w-full max-w-7xl flex-col items-center justify-center
+          border-t border-white/10
+          px-4 py-12
+          text-center
+          sm:px-6 sm:py-14
+          md:px-8 md:py-16
+          lg:py-20
+        "
+      >
+        {/* BRAND */}
+        <div
+          className="
+            font-heading font-black uppercase leading-none
+            text-3xl
+            sm:text-4xl
+            md:text-5xl
+            lg:text-6xl
+            break-words
+          "
+        >
           Sazi <span className="text-mint">Balasingam</span>
         </div>
 
-        <p className="font-mono text-sm md:text-base text-gray-400 max-w-lg mt-2">
-          Forging high-impact visual identities and digital experiences. Let's create something amazing together.
+        {/* DESCRIPTION */}
+        <p
+          className="
+            mt-5 max-w-2xl
+            px-2
+            font-mono leading-relaxed text-gray-400
+            text-xs
+            sm:text-sm
+            md:text-base
+          "
+        >
+          Forging high-impact visual identities and digital experiences.
+          Creating brand identity systems, logo design, poster design, social
+          media graphics, modern websites, and user experiences that help
+          businesses stand out across digital platforms.
         </p>
 
-        <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 font-mono text-xs md:text-sm tracking-widest uppercase mt-6 text-gray-200">
-          <a href="tel:+1234567890" className="hover:text-mint transition-colors duration-300">
-            +1 (234) 567-890
+        {/* CONTACT DETAILS */}
+        <div
+          className="
+            mt-8
+            flex w-full flex-col items-center justify-center
+            gap-4
+            font-mono uppercase tracking-widest text-gray-200
+            text-[10px]
+            sm:text-xs
+            md:text-sm
+            lg:flex-row lg:gap-6
+          "
+        >
+          {/* PHONE */}
+          <a
+            href={`tel:${siteConfig.phone}`}
+            className="
+              break-all transition-colors duration-300
+              hover:text-mint
+            "
+          >
+            +1 (555) 123-4567
           </a>
-          <span className="hidden md:block text-gray-600">|</span>
-          <a href="https://yourwebsite.com" target="_blank" rel="noreferrer" className="hover:text-peri transition-colors duration-300">
-            WWW.YOURWEBSITE.COM
+
+          <span className="hidden lg:block text-gray-600">|</span>
+
+          {/* WEBSITE */}
+          <a
+            href={siteConfig.url}
+            target="_blank"
+            rel="noreferrer"
+            className="
+              break-all transition-colors duration-300
+              hover:text-peri
+            "
+          >
+            sazibalasingam.com
           </a>
-          <span className="hidden md:block text-gray-600">|</span>
-          <span className="hover:text-white transition-colors duration-300">
-            123 CREATIVE STUDIO, DESIGN CITY, NY 10001
-          </span>
+
+          <span className="hidden lg:block text-gray-600">|</span>
+
+          {/* ADDRESS */}
+          <p
+            className="
+              max-w-md
+              leading-relaxed
+              text-center
+              text-gray-300
+            "
+          >
+            {siteConfig.location}
+          </p>
         </div>
+
+        {/* CTA BUTTON */}
+        {shouldShowContact && (
+          <div className="mt-8">
+            <Link
+              href="/contact"
+              className="
+                inline-flex items-center justify-center
+                border-2 border-white
+                px-5 py-3
+                font-mono font-bold uppercase tracking-widest
+                transition-all duration-300
+                hover:bg-white hover:text-obsidian
+                active:scale-95
+                text-[10px]
+                sm:px-6 sm:text-xs
+                md:text-sm
+              "
+            >
+              Start A Design Project
+            </Link>
+          </div>
+        )}
       </div>
 
-      {/* Bottom Ticker */}
-      <div className="w-full overflow-hidden border-t-4 border-obsidian py-2 bg-peri text-obsidian z-50 flex items-center">
-        <div className="font-mono font-bold text-xs md:text-sm tracking-widest uppercase items-center whitespace-nowrap flex gap-4 md:gap-8 animate-marquee">
-          <span>Brand Identity</span><span className="text-white">•</span>
-          <span>Web Design</span><span className="text-white">•</span>
-          <span>UX/UI</span><span className="text-white">•</span>
-          <span>Typography</span><span className="text-white">•</span>
-          <span>Creative Direction</span><span className="text-white">•</span>
-
-          <span>Brand Identity</span><span className="text-white">•</span>
-          <span>Web Design</span><span className="text-white">•</span>
-          <span>UX/UI</span><span className="text-white">•</span>
-          <span>Typography</span><span className="text-white">•</span>
-          <span>Creative Direction</span><span className="text-white">•</span>
-
-          <span>Brand Identity</span><span className="text-white">•</span>
-          <span>Web Design</span><span className="text-white">•</span>
-          <span>UX/UI</span><span className="text-white">•</span>
-          <span>Typography</span><span className="text-white">•</span>
-          <span>Creative Direction</span>
+      {/* RESPONSIVE MARQUEE */}
+      <div
+        className="
+          relative flex w-full items-center overflow-hidden
+          border-t border-white/10
+          bg-peri
+          py-3
+          text-obsidian
+        "
+      >
+        <div
+          className="
+            animate-marquee
+            flex min-w-max items-center
+            gap-4
+            whitespace-nowrap
+            font-mono font-bold uppercase tracking-widest
+            text-[10px]
+            sm:gap-6 sm:text-xs
+            md:gap-8 md:text-sm
+          "
+        >
+          {[...tickerItems, ...tickerItems, ...tickerItems].map(
+            (item, index) => (
+              <div
+                key={`${item}-${index}`}
+                className="flex items-center gap-4 md:gap-6"
+              >
+                <span>{item}</span>
+                <span className="text-white">•</span>
+              </div>
+            )
+          )}
         </div>
       </div>
     </footer>

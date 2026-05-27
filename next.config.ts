@@ -12,15 +12,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-
-  // ⚠️ You can keep these for now, but remove later in production
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-
   turbopack: {
     rules: {
       "*.{jsx,tsx}": {

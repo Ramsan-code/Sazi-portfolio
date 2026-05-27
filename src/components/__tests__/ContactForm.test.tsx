@@ -1,18 +1,26 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { ContactForm } from '../ContactForm'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { toast } from 'sonner'
+
+vi.mock('sonner', () => ({
+  toast: {
+    success: vi.fn(),
+    error: vi.fn(),
+  },
+}))
 
 describe('ContactForm Integration & Regression', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    window.alert = vi.fn()
+    global.fetch = vi.fn().mockResolvedValue({ ok: true })
     console.log = vi.fn()
   })
 
   it('shows validation errors for empty fields', async () => {
     render(<ContactForm />)
     
-    const submitButton = screen.getByText(/Submit Mission/i)
+    const submitButton = screen.getByText(/Request Design Quote/i)
     fireEvent.click(submitButton)
 
     expect(await screen.findByText(/Name must be at least 2 characters/i)).toBeInTheDocument()
@@ -25,13 +33,16 @@ describe('ContactForm Integration & Regression', () => {
     
     fireEvent.change(screen.getByPlaceholderText(/ALICE WONDERLAND/i), { target: { value: 'John Doe' } })
     fireEvent.change(screen.getByPlaceholderText(/ALICE@RAD-STARTUP.COM/i), { target: { value: 'john@example.com' } })
-    fireEvent.change(screen.getByPlaceholderText(/TELL ME ABOUT YOUR BRUTAL PROJECT/i), { target: { value: 'This is a test message for the project.' } })
+    fireEvent.change(screen.getByPlaceholderText(/TELL ME ABOUT YOUR BRAND, LOGO, POSTER, OR UI\/UX PROJECT/i), { target: { value: 'This is a test message for the project.' } })
 
-    const submitButton = screen.getByText(/Submit Mission/i)
+    const submitButton = screen.getByText(/Request Design Quote/i)
     fireEvent.click(submitButton)
 
     await waitFor(() => {
-      expect(window.alert).toHaveBeenCalledWith("Project request submitted securely!")
+      expect(toast.success).toHaveBeenCalledWith(
+        "MISSION RECEIVED. STAND BY FOR TRANSMISSION.",
+        expect.any(Object)
+      )
     })
   })
 
@@ -40,9 +51,9 @@ describe('ContactForm Integration & Regression', () => {
     
     fireEvent.change(screen.getByPlaceholderText(/ALICE WONDERLAND/i), { target: { value: 'John Doe' } })
     fireEvent.change(screen.getByPlaceholderText(/ALICE@RAD-STARTUP.COM/i), { target: { value: 'john@example.com' } })
-    fireEvent.change(screen.getByPlaceholderText(/TELL ME ABOUT YOUR BRUTAL PROJECT/i), { target: { value: 'This is a test message for the project.' } })
+    fireEvent.change(screen.getByPlaceholderText(/TELL ME ABOUT YOUR BRAND, LOGO, POSTER, OR UI\/UX PROJECT/i), { target: { value: 'This is a test message for the project.' } })
 
-    const submitButton = screen.getByText(/Submit Mission/i)
+    const submitButton = screen.getByText(/Request Design Quote/i)
     fireEvent.click(submitButton)
 
     await waitFor(() => {

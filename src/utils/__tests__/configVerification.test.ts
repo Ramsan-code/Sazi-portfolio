@@ -12,10 +12,11 @@ describe('Deployment Configuration Regression', () => {
     expect(configContent).not.toContain('../../')
   })
 
-  it('contains essential deployment settings', () => {
+  it('does not skip linting or type checking during builds', () => {
     const configPath = path.resolve(process.cwd(), 'next.config.ts')
     const configContent = fs.readFileSync(configPath, 'utf8')
     
-    expect(configContent).toContain('ignoreDuringBuilds')
+    expect(configContent).not.toContain('ignoreDuringBuilds')
+    expect(configContent).not.toContain('ignoreBuildErrors')
   })
 })

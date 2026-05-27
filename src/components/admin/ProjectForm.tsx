@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { getErrorMessage } from "@/lib/errors";
 
 interface Category {
   _id: string;
@@ -13,7 +14,7 @@ interface SubCategory {
   _id: string;
   name: string;
   slug: string;
-  category_id: string;
+  category_id: string | { _id: string; name: string; slug: string };
 }
 
 interface ProjectFormProps {
@@ -44,6 +45,7 @@ export default function ProjectForm({ initialData }: ProjectFormProps) {
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [subcategories, setSubcategories] = useState<SubCategory[]>([]);
+  const [subcategoriesLoading, setSubcategoriesLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState(initialData?.img || "");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -64,9 +66,12 @@ export default function ProjectForm({ initialData }: ProjectFormProps) {
       setSubcategories([]);
       return;
     }
+    setSubcategoriesLoading(true);
     fetch(`/api/subcategory?category_id=${form.category_id}`)
       .then((r) => r.json())
-      .then((d) => setSubcategories(d.data || []));
+      .then((d) => setSubcategories(d.data || []))
+      .catch(() => setSubcategories([]))
+      .finally(() => setSubcategoriesLoading(false));
   }, [form.category_id]);
 
   const handleChange = (
@@ -110,8 +115,8 @@ export default function ProjectForm({ initialData }: ProjectFormProps) {
       const data = await res.json();
       if (!data.success) throw new Error(data.message);
       return data.data;
-    } catch (err: any) {
-      setError("Image upload failed: " + err.message);
+    } catch (err: unknown) {
+      setError("Image upload failed: " + getErrorMessage(err, "Unknown error"));
       return null;
     } finally {
       setUploading(false);
@@ -167,15 +172,15 @@ export default function ProjectForm({ initialData }: ProjectFormProps) {
 
       setSuccess(isEdit ? "Project updated!" : "Project created!");
       if (!isEdit) router.push("/admin/projects");
-    } catch (err: any) {
-      setError(err.message || "Something went wrong.");
+    } catch (err: unknown) {
+      setError(getErrorMessage(err, "Something went wrong."));
     } finally {
       setSubmitting(false);
     }
   };
 
   const selectedCategory = categories.find((c) => c._id === form.category_id);
-  const isSocialMedia = selectedCategory?.name === "Social Media";
+  const hasSubcategories = subcategories.length > 0;
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -196,47 +201,60 @@ export default function ProjectForm({ initialData }: ProjectFormProps) {
       </div>
 
       {/* Category */}
-      <div>
-        <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">
-          Category
-        </label>
-        <select
-          name="category_id"
-          value={form.category_id}
-          onChange={handleChange}
-          required
-          className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white transition-colors"
-        >
-          <option value="">Select a category</option>
-          {categories.map((cat) => (
-            <option key={cat._id} value={cat._id}>
-              {cat.name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Subcategory — only show for Social Media */}
-      {isSocialMedia && (
+      <div className="grid gap-4 md:grid-cols-2">
         <div>
           <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">
-            Platform
+            Category
+          </label>
+          <select
+            name="category_id"
+            value={form.category_id}
+            onChange={handleChange}
+            required
+            className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white transition-colors"
+          >
+            <option value="">Select a category</option>
+            {categories.map((cat) => (
+              <option key={cat._id} value={cat._id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">
+            Subcategory
           </label>
           <select
             name="subcategory_id"
             value={form.subcategory_id}
             onChange={handleChange}
-            className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white transition-colors"
+            disabled={!form.category_id || subcategoriesLoading || !hasSubcategories}
+            className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
           >
-            <option value="">Select a platform</option>
+            <option value="">
+              {subcategoriesLoading
+                ? "Loading subcategories..."
+                : hasSubcategories
+                ? "Select a subcategory"
+                : "No subcategory required"}
+            </option>
             {subcategories.map((sub) => (
               <option key={sub._id} value={sub._id}>
                 {sub.name}
               </option>
             ))}
           </select>
+          <p className="mt-2 text-xs text-zinc-500">
+            {selectedCategory
+              ? hasSubcategories
+                ? `Choose the relevant ${selectedCategory.name} type.`
+                : `${selectedCategory.name} projects do not need a subcategory.`
+              : "Choose a category first."}
+          </p>
         </div>
-      )}
+      </div>
 
       {/* Image Upload */}
       <div>
@@ -249,6 +267,7 @@ export default function ProjectForm({ initialData }: ProjectFormProps) {
         >
           {imagePreview ? (
             <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={imagePreview}
                 alt="Preview"

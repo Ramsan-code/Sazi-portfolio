@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import SubCategory from "@/app/models/Subcategory";
+import { requireAdmin } from "@/lib/adminAuth";
+import { getErrorMessage } from "@/lib/errors";
 
 // GET /api/subcategories
 // GET /api/subcategories?category_id=xxx
@@ -19,7 +21,7 @@ export async function GET(req: NextRequest) {
       .sort({ name: 1 });
 
     return NextResponse.json({ success: true, data: subcategories }, { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { success: false, message: "Failed to fetch subcategories" },
       { status: 500 }
@@ -30,6 +32,9 @@ export async function GET(req: NextRequest) {
 // POST /api/subcategories
 export async function POST(req: NextRequest) {
   try {
+    const unauthorized = requireAdmin(req);
+    if (unauthorized) return unauthorized;
+
     await dbConnect();
 
     const body = await req.json();
@@ -53,9 +58,9 @@ export async function POST(req: NextRequest) {
     const subcategory = await SubCategory.create({ category_id, name, slug });
 
     return NextResponse.json({ success: true, data: subcategory }, { status: 201 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { success: false, message: error.message || "Failed to create subcategory" },
+      { success: false, message: getErrorMessage(error, "Failed to create subcategory") },
       { status: 500 }
     );
   }

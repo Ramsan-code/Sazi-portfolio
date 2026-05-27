@@ -1,10 +1,20 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import "dotenv/config";
 
-const MONGO_URI = "mongodb://lajee001_db_user:YMB3c21sZ2iftqaD@ac-uqpiaq2-shard-00-00.0skyeub.mongodb.net:27017,ac-uqpiaq2-shard-00-01.0skyeub.mongodb.net:27017,ac-uqpiaq2-shard-00-02.0skyeub.mongodb.net:27017/?ssl=true&replicaSet=atlas-pg9kjk-shard-0&authSource=admin&appName=Cluster0";
+const MONGO_URI = process.env.MONGODB_URI;
+const MONGODB_DB = process.env.MONGODB_DB || "sazi-portfolio";
+const ADMIN_EMAIL = process.env.SEED_ADMIN_EMAIL;
+const ADMIN_PASSWORD = process.env.SEED_ADMIN_PASSWORD;
 
 async function seed() {
-  await mongoose.connect(MONGO_URI);
+  if (!MONGO_URI || !ADMIN_EMAIL || !ADMIN_PASSWORD) {
+    throw new Error(
+      "MONGODB_URI, SEED_ADMIN_EMAIL, and SEED_ADMIN_PASSWORD are required"
+    );
+  }
+
+  await mongoose.connect(MONGO_URI, { dbName: MONGODB_DB });
   console.log("✓ Connected to MongoDB");
 
   const UserSchema = new mongoose.Schema({
@@ -16,7 +26,7 @@ async function seed() {
 
   const User = mongoose.models.User || mongoose.model("User", UserSchema);
 
-  const exists = await User.findOne({ email: "admin@example.com" });
+  const exists = await User.findOne({ email: ADMIN_EMAIL });
   if (exists) {
     console.log("⚠️  Admin already exists. Skipping.");
     await mongoose.disconnect();
@@ -25,12 +35,12 @@ async function seed() {
 
   await User.create({
     name: "Super Admin",
-    email: "admin@example.com",
-    password: await bcrypt.hash("Admin@1234", 10),
+    email: ADMIN_EMAIL,
+    password: await bcrypt.hash(ADMIN_PASSWORD, 10),
     isActive: true,
   });
 
-  console.log("✓ Admin seeded: admin@example.com / Admin@1234");
+  console.log(`✓ Admin seeded: ${ADMIN_EMAIL}`);
   await mongoose.disconnect();
 }
 

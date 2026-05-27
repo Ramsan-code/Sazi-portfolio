@@ -1,44 +1,102 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import Projects from '../page'
-import { describe, it, expect, vi } from 'vitest'
+import { beforeEach, describe, it, expect, vi } from 'vitest'
 
-// Mock the actual projects data
-vi.mock('@/data/projects', () => ({
-  PROJECTS: [
-    { id: 1, title: 'Branding Project', category: 'Branding', slug: 'branding-1', color: 'mint', imageTheme: '' },
-    { id: 2, title: 'UI Project', category: 'UI/UX', slug: 'ui-1', color: 'peri', imageTheme: '' },
-  ],
-  CATEGORIES: ['All', 'Branding', 'UI/UX']
-}))
+const categories = [
+  { _id: 'cat-logo', name: 'Logo Design', slug: 'logo-design' },
+  { _id: 'cat-social', name: 'Social Media', slug: 'social-media' },
+]
+
+const subcategories = [
+  {
+    _id: 'sub-instagram',
+    name: 'Instagram Post',
+    slug: 'instagram-post',
+    category_id: { _id: 'cat-social', name: 'Social Media', slug: 'social-media' },
+  },
+]
+
+const projects = [
+  {
+    _id: 'project-logo',
+    name: 'Logo Project',
+    img: 'https://res.cloudinary.com/demo/image/upload/sample.jpg',
+    description: 'A logo identity project.',
+    tools: ['Illustrator'],
+    category_id: { _id: 'cat-logo', name: 'Logo Design', slug: 'logo-design' },
+    subcategory_id: null,
+  },
+  {
+    _id: 'project-social',
+    name: 'Instagram Project',
+    img: 'https://res.cloudinary.com/demo/image/upload/sample.jpg',
+    description: 'A social media project.',
+    tools: ['Photoshop'],
+    category_id: { _id: 'cat-social', name: 'Social Media', slug: 'social-media' },
+    subcategory_id: {
+      _id: 'sub-instagram',
+      name: 'Instagram Post',
+      slug: 'instagram-post',
+    },
+  },
+]
+
+function mockFetch() {
+  vi.stubGlobal(
+    'fetch',
+    vi.fn((url: string) => {
+      if (url === '/api/category') {
+        return Promise.resolve({ json: () => Promise.resolve({ data: categories }) })
+      }
+      if (url === '/api/subcategory') {
+        return Promise.resolve({ json: () => Promise.resolve({ data: subcategories }) })
+      }
+      if (url === '/api/project') {
+        return Promise.resolve({ json: () => Promise.resolve({ data: projects }) })
+      }
+      return Promise.reject(new Error(`Unhandled fetch: ${url}`))
+    })
+  )
+}
 
 describe('Projects Page Integration', () => {
-  it('renders all projects initially', () => {
-    render(<Projects />)
-    expect(screen.getByText('Branding Project')).toBeInTheDocument()
-    expect(screen.getByText('UI Project')).toBeInTheDocument()
+  beforeEach(() => {
+    vi.restoreAllMocks()
+    mockFetch()
   })
 
-  it('filters projects when a category button is clicked', () => {
+  it('renders database projects initially', async () => {
     render(<Projects />)
-    
-    const uiFilterButton = screen.getByRole('button', { name: /UI\/UX/i })
-    fireEvent.click(uiFilterButton)
-    
-    expect(screen.queryByText('Branding Project')).not.toBeInTheDocument()
-    expect(screen.getByText('UI Project')).toBeInTheDocument()
-    
-    const allFilterButton = screen.getByRole('button', { name: /All/i })
+
+    expect(await screen.findByText('Logo Project')).toBeInTheDocument()
+    expect(screen.getByText('Instagram Project')).toBeInTheDocument()
+  })
+
+  it('filters projects when a category button is clicked', async () => {
+    render(<Projects />)
+
+    const socialButton = await screen.findByRole('button', { name: /Social Media/i })
+    fireEvent.click(socialButton)
+
+    await waitFor(() => {
+      expect(screen.queryByText('Logo Project')).not.toBeInTheDocument()
+    })
+    expect(screen.getByText('Instagram Project')).toBeInTheDocument()
+
+    const allFilterButton = screen.getByRole('button', { name: /^All$/i })
     fireEvent.click(allFilterButton)
-    
-    expect(screen.getByText('Branding Project')).toBeInTheDocument()
-    expect(screen.getByText('UI Project')).toBeInTheDocument()
+
+    expect(screen.getByText('Logo Project')).toBeInTheDocument()
+    expect(screen.getByText('Instagram Project')).toBeInTheDocument()
   })
 
-  it('applies active styles to selected filter', () => {
+  it('shows relevant subcategories for the selected category', async () => {
     render(<Projects />)
-    const brandingButton = screen.getByRole('button', { name: /Branding/i })
-    
-    fireEvent.click(brandingButton)
-    expect(brandingButton).toHaveClass('bg-obsidian') // Active state class
+
+    const socialButton = await screen.findByRole('button', { name: /Social Media/i })
+    fireEvent.click(socialButton)
+
+    expect(screen.getByRole('button', { name: /Instagram Post/i })).toBeInTheDocument()
+    expect(socialButton).toHaveClass('bg-obsidian')
   })
 })

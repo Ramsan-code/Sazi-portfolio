@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import dbConnect from "@/lib/db";
 import { User } from "@/app/models/user";
-import { signToken } from "@/lib/auth";
+import { ADMIN_COOKIE_NAME, signToken } from "@/lib/auth";
+import { getErrorMessage } from "@/lib/errors";
 
 export async function POST(req: NextRequest) {
   try {
@@ -10,13 +11,7 @@ export async function POST(req: NextRequest) {
 
     await dbConnect();
 
-    // DEBUG — remove after fixing
-    const allUsers = await User.find({});
-    console.log("ALL USERS IN DB:", JSON.stringify(allUsers, null, 2));
-    console.log("LOOKING FOR EMAIL:", email);
-
     const user = await User.findOne({ email, isActive: true });
-    console.log("FOUND USER:", user);
 
     if (!user) {
       return NextResponse.json({ message: "Access denied." }, { status: 403 });
@@ -34,7 +29,8 @@ export async function POST(req: NextRequest) {
       admin: { id: user._id, name: user.name, email: user.email },
     });
 
-    res.cookies.set("admin_token", token, {
+    res.cookies.delete("admin_token");
+    res.cookies.set(ADMIN_COOKIE_NAME, token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
@@ -43,8 +39,20 @@ export async function POST(req: NextRequest) {
     });
 
     return res;
-  } catch (err) {
-    console.log("ERROR:", err);
-    return NextResponse.json({ message: "Server error." }, { status: 500 });
+  } catch (err: unknown) {
+    const message = getErrorMessage(err, "Server error.");
+    const isMongoConnectionError =
+      message.includes("Could not connect to any servers") ||
+      message.includes("MONGODB_URI");
+
+    return NextResponse.json(
+      {
+        message:
+          process.env.NODE_ENV !== "production" && isMongoConnectionError
+            ? "Database connection failed. Check MongoDB Atlas Network Access and MONGODB_URI."
+            : "Server error.",
+      },
+      { status: 500 }
+    );
   }
 }

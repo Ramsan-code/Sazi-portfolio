@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import Category from "@/app/models/Category";
+import { requireAdmin } from "@/lib/adminAuth";
+import { getErrorMessage } from "@/lib/errors";
 
 // GET /api/categories
 export async function GET() {
@@ -10,7 +12,7 @@ export async function GET() {
     const categories = await Category.find().sort({ name: 1 });
 
     return NextResponse.json({ success: true, data: categories }, { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { success: false, message: "Failed to fetch categories" },
       { status: 500 }
@@ -21,6 +23,9 @@ export async function GET() {
 // POST /api/categories
 export async function POST(req: NextRequest) {
   try {
+    const unauthorized = requireAdmin(req);
+    if (unauthorized) return unauthorized;
+
     await dbConnect();
 
     const body = await req.json();
@@ -44,9 +49,9 @@ export async function POST(req: NextRequest) {
     const category = await Category.create({ name, slug });
 
     return NextResponse.json({ success: true, data: category }, { status: 201 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { success: false, message: error.message || "Failed to create category" },
+      { success: false, message: getErrorMessage(error, "Failed to create category") },
       { status: 500 }
     );
   }
