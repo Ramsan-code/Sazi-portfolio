@@ -6,6 +6,7 @@ export const metadata = createSeoMetadata({
   description:
     "Explore Sazi Balasingam's graphic design portfolio featuring brand identity, logo design, poster design, social media graphics, UI/UX systems, and digital experiences.",
   path: "/",
+  type: "website",
   keywords: [
     "graphic design portfolio",
     "freelance graphic designer",
@@ -17,13 +18,14 @@ export const metadata = createSeoMetadata({
 export default function Home() {
   return (
     <>
+      {/* ── Person structured data ─────────────────────────────────── */}
       <JsonLd
         data={{
           "@context": "https://schema.org",
           "@type": "Person",
           name: siteConfig.name,
           url: siteConfig.url,
-          image: `${siteConfig.url}/portrait.png`,
+          image: siteConfig.ogImage,
           jobTitle: "Graphic Designer",
           email: siteConfig.email,
           telephone: siteConfig.phone,
@@ -33,6 +35,7 @@ export default function Home() {
             addressRegion: "CA",
             addressCountry: "US",
           },
+          sameAs: siteConfig.sameAs,
           knowsAbout: [
             "Brand identity design",
             "Logo design",
@@ -43,6 +46,8 @@ export default function Home() {
           ],
         }}
       />
+
+      {/* ── WebSite structured data with SearchAction ──────────────── */}
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -50,8 +55,17 @@ export default function Home() {
           name: siteConfig.name,
           url: siteConfig.url,
           description: siteConfig.description,
+          potentialAction: {
+            "@type": "SearchAction",
+            target: {
+              "@type": "EntryPoint",
+              urlTemplate: `${siteConfig.url}/projects?q={search_term_string}`,
+            },
+            "query-input": "required name=search_term_string",
+          },
         }}
       />
+
       <HomeClient />
     </>
   );

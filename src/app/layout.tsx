@@ -39,6 +39,26 @@ export const metadata: Metadata = {
     },
   },
   category: "design portfolio",
+  // Global OG fallback — overridden per page via generateMetadata()
+  openGraph: {
+    siteName: siteConfig.name,
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 1200,
+        alt: `${siteConfig.name} — Graphic Designer & Brand Identity Portfolio`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    creator: siteConfig.socialHandle,
+    site: siteConfig.socialHandle,
+    images: [siteConfig.ogImage],
+  },
 };
 
 export default function RootLayout({
