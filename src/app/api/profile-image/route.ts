@@ -1,11 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import ProfileImage from "@/app/models/profileImg";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const { searchParams } = new URL(req.url);
+    const page = searchParams.get("page") ?? "home";
+
     await dbConnect();
-    const image = await ProfileImage.findOne().sort({ createdAt: -1 });
+    const image = await ProfileImage.findOne({ page }).sort({ createdAt: -1 });
 
     if (!image) {
       return NextResponse.json({ url: "" });

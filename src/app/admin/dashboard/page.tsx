@@ -6,7 +6,9 @@ import { User } from "@/app/models/user";
 import Category from "@/app/models/Category";
 import SubCategory from "@/app/models/Subcategory";
 import Project from "@/app/models/Project";
+import ProfileImage from "@/app/models/profileImg";
 import Link from "next/link";
+import { ImageBox } from "@/components/admin/ImageBox";
 
 export default async function DashboardPage() {
   const cookieStore = await cookies();
@@ -16,12 +18,17 @@ export default async function DashboardPage() {
   if (!payload) redirect("/login");
 
   await dbConnect();
-  const [admin, categories, subcategories, projectCount] = await Promise.all([
+  const [admin, categories, subcategories, projectCount, homeImg, aboutImg] = await Promise.all([
     User.findById(payload.id).select("-password"),
     Category.find().sort({ name: 1 }).lean(),
     SubCategory.find().populate("category_id", "name slug").sort({ name: 1 }).lean(),
     Project.countDocuments(),
+    ProfileImage.findOne({ page: "home" }).lean(),
+    ProfileImage.findOne({ page: "about" }).lean(),
   ]);
+
+  const homeImageUrl  = (homeImg as { url?: string } | null)?.url  ?? "/portrait.png";
+  const aboutImageUrl = (aboutImg as { url?: string } | null)?.url ?? "/portrait.png";
 
   const categorySummaries = categories.map((category) => ({
     id: category._id.toString(),
@@ -103,6 +110,29 @@ export default async function DashboardPage() {
             Manage Projects
           </Link>
         </div>
+
+        {/* ── Image Management ───────────────────────────────────── */}
+        <section className="rounded-lg border border-zinc-800 bg-zinc-900 p-6">
+          <div className="mb-6">
+            <h2 className="text-xl font-bold tracking-tight">Page Images</h2>
+            <p className="mt-1 text-sm text-zinc-500">
+              Click an image box to upload a replacement. Changes appear on the live site immediately.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-10">
+            <ImageBox
+              page="home"
+              initialUrl={homeImageUrl}
+              label="Home Page Portrait"
+            />
+            <ImageBox
+              page="about"
+              initialUrl={aboutImageUrl}
+              label="About Page Portrait"
+            />
+          </div>
+        </section>
 
         <section>
           <div className="mb-4">

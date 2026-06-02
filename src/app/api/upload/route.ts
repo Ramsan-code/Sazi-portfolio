@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 import dbConnect from "@/lib/db";
-import ProfileImage from "@/app/models/profileImg";
+import ProfileImage, { PageKey } from "@/app/models/profileImg";
 import { requireAdmin } from "@/lib/adminAuth";
+import { revalidatePath } from "next/cache";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -15,7 +16,12 @@ export async function POST(req: NextRequest) {
     const unauthorized = requireAdmin(req);
     if (unauthorized) return unauthorized;
 
-    const { image } = await req.json();
+    const { image, page = "home" } = await req.json();
+
+    // Validate page value
+    if (!["home", "about"].includes(page)) {
+      return NextResponse.json({ error: "Invalid page value. Must be 'home' or 'about'." }, { status: 400 });
+    }
 
     if (
       typeof image !== "string" ||
@@ -31,20 +37,24 @@ export async function POST(req: NextRequest) {
 
     // Upload to Cloudinary
     const uploadRes = await cloudinary.uploader.upload(image, {
-      folder: "portfolio",
+      folder: `portfolio/${page}`,
     });
 
-    // Save URL to MongoDB
+    // Save URL to MongoDB — upsert by page key
     await dbConnect();
     await ProfileImage.findOneAndUpdate(
-      {},
-      { url: uploadRes.secure_url },
-      { upsert: true, returnDocument: "after" }
+      { page: page as PageKey },
+      { url: uploadRes.secure_url, publicId: uploadRes.public_id },
+      { upsert: true, new: true }
     );
 
-    return NextResponse.json({ url: uploadRes.secure_url });
+    // Invalidate Next.js cache for the relevant public page
+    revalidatePath(page === "home" ? "/" : "/about");
+
+    return NextResponse.json({ url: uploadRes.secure_url, page });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: "Upload failed" }, { status: 500 });
   }
 }
+

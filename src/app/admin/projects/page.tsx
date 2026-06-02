@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
+import LogoutButton from "@/components/admin/LogoutButton";
 
 interface Project {
   _id: string;
@@ -84,12 +85,15 @@ export default function AdminProjectsPage() {
             <p className="text-zinc-500 text-sm mt-0.5">{projects.length} total</p>
           </div>
         </div>
-        <Link
-          href="/admin/projects/new"
-          className="bg-white text-black text-sm font-bold px-4 py-2 rounded-lg hover:bg-zinc-200 transition-colors uppercase tracking-widest"
-        >
-          + New Project
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/admin/projects/new"
+            className="bg-white text-black text-sm font-bold px-4 py-2 rounded-lg hover:bg-zinc-200 transition-colors uppercase tracking-widest"
+          >
+            + New Project
+          </Link>
+          <LogoutButton />
+        </div>
       </div>
 
       <div className="p-6">

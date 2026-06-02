@@ -3,8 +3,25 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { BackgroundAccents } from "@/components/BackgroundAccents";
+import { useEffect, useState } from "react";
 
 export function AboutClient() {
+  const [imageUrl, setImageUrl] = useState<string>("");
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const res = await fetch("/api/profile-image?page=about");
+        const data: { url: string } = await res.json();
+        setImageUrl(data.url);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchImage();
+  }, []);
+
   return (
     <main className="relative w-full min-h-screen overflow-hidden bg-obsidian text-white pb-24">
       <BackgroundAccents />
@@ -48,7 +65,7 @@ export function AboutClient() {
 
             <div className="p-6 sm:p-8 border-4 border-white bg-obsidian shadow-[10px_10px_0px_#5E6AD2]">
               <h2 className="font-mono text-lg sm:text-xl font-bold uppercase text-peri mb-5 tracking-wide">
-                Graphic Design Services & Core Competencies
+                Graphic Design Services &amp; Core Competencies
               </h2>
               <ul className="font-mono text-sm sm:text-base text-gray-300 space-y-3">
                 <li className="flex items-start gap-2">
@@ -85,7 +102,7 @@ export function AboutClient() {
 
             <div className="relative border-4 border-white bg-zinc-900 aspect-[3/4] overflow-hidden z-10 group">
               <Image
-                src="/portrait.png"
+                src={imageUrl || "/portrait.png"}
                 alt="Sazi Balasingam working on bold graphic design and brand identity projects"
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
